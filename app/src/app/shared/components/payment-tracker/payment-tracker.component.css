@@ -1,0 +1,106 @@
+.payment-tracker {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 16px 0;
+  background: white;
+}
+
+.payment-tracker.loading {
+  border-left: 4px solid #6c757d;
+}
+
+.payment-tracker.processing {
+  border-left: 4px solid #007bff;
+}
+
+.payment-tracker.success {
+  border-left: 4px solid #28a745;
+  background-color: #f8fff9;
+}
+
+.payment-tracker.error {
+  border-left: 4px solid #dc3545;
+  background-color: #fff5f5;
+}
+
+.tracker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tracker-header h4 {
+  margin: 0;
+  color: #333;
+}
+
+.trace-id {
+  font-family: monospace;
+  background-color: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #495057;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.status-icon {
+  margin-right: 12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.success-icon {
+  color: #28a745;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.error-icon {
+  color: #dc3545;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.status-message {
+  font-weight: 500;
+  color: #333;
+}
+
+.payment-details p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.error-message {
+  color: #dc3545 !important;
+  font-weight: 500;
+}
