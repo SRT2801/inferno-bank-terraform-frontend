@@ -259,3 +259,5 @@ app/.angular/
 # IDE
 .vscode/
 *.log" > .gitignore
+environment.ts
+environment.prod.ts
