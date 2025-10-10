@@ -1,10 +1,13 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { Service } from "../../models/service.interface";
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Service } from '../../models/service.interface';
 
 @Component({
-  selector: "app-service-card",
-  templateUrl: "./service-card.component.html",
-  styleUrl: "./service-card.component.css",
+  selector: 'app-service-card',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './service-card.component.html',
+  styleUrl: './service-card.component.css',
 })
 export class ServiceCardComponent {
   @Input() service!: Service;
@@ -18,9 +21,9 @@ export class ServiceCardComponent {
   }
 
   formatPrice(price: number): string {
-    return new Intl.NumberFormat("es-CO", {
-      style: "currency",
-      currency: "COP",
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
       minimumFractionDigits: 0,
     }).format(price);
   }
