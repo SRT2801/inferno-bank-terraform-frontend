@@ -1,0 +1,22 @@
+<div class="service-card" [class.disabled]="disabled" [class.inactive]="service.estado !== 'Activo'"
+    (click)="onSelectService()">
+
+    <div class="service-header">
+        <h3 class="service-title">{{service.servicio}}</h3>
+        <span class="service-category">{{service.categoria}}</span>
+    </div>
+
+    <div class="service-body">
+        <p class="service-provider">{{service.proveedor}}</p>
+        <p class="service-plan">Plan: {{service.plan}}</p>
+        <p class="service-details">{{service.detalles}}</p>
+    </div>
+
+    <div class="service-footer">
+        <span class="service-price">{{formatPrice(service.precio_mensual)}}</span>
+        <span class="service-status" [class.active]="service.estado === 'Activo'"
+            [class.inactive]="service.estado !== 'Activo'">
+            {{service.estado}}
+        </span>
+    </div>
+</div>
