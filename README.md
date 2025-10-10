@@ -233,7 +233,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ## 👨‍💻 Autor
 
-**Tu Nombre** - [@SRT2801](https://github.com/SRT2801)
+**Sahir David Ruiz Taborda** - [@SRT2801](https://github.com/SRT2801)
 
 ---
 
