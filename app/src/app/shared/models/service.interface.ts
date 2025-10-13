@@ -4,7 +4,26 @@ export interface Service {
   proveedor: string;
   servicio: string;
   plan: string;
-  precio_mensual: number;
-  detalles: string;
+  precioMensual: number;
+  velocidadDetalles: string;
   estado: string;
+}
+
+
+export interface ApiResponse {
+  message: string;
+  response: {
+    action: string;
+    key: string;
+    data: {
+      items: Service[];
+      file: {
+        url: string;
+        s3Key: string;
+        filename: string;
+        mimetype: string;
+        uploadedAt: string;
+      };
+    };
+  };
 }
