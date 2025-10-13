@@ -1,2 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+@layer utilities {
+  .bg-card-light\/30 {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .dark .bg-card-dark\/30,
+  .dark .dark\:bg-card-dark\/30 {
+    background-color: rgba(40, 25, 55, 0.12) !important;
+  }
+
+  .shadow-glass {
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+
+  .backdrop-blur-lg {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .dark .glass-card {
+    background: rgba(40, 25, 55, 0.2) !important;
+    border: 1px solid rgba(167, 139, 250, 0.2);
+  }
+}
