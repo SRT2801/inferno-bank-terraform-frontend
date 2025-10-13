@@ -1,0 +1,75 @@
+/* Tarjetas de cristal */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+:host-context(.dark) .glass-card {
+  background: rgba(40, 25, 55, 0.2) !important;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+/* Botones de cristal */
+.glass-button {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
+:host-context(.dark) .glass-button {
+  background: rgba(167, 139, 250, 0.2);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+/* Efectos hover */
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s ease-in-out;
+}
+
+:host-context(.dark) .glass-button:hover {
+  background: rgba(167, 139, 250, 0.3) !important;
+}
+
+/* Estilos para el input de búsqueda */
+input.glass-button {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+input.glass-button:focus {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: #607afb !important;
+  box-shadow: 0 0 0 3px rgba(96, 122, 251, 0.1) !important;
+}
+
+input.glass-button::placeholder {
+  color: #cccccc !important;
+}
+
+:host-context(.dark) input.glass-button {
+  background: rgba(40, 25, 55, 0.3) !important;
+  color: #ffffff !important;
+}
+
+:host-context(.dark) input.glass-button:focus {
+  background: rgba(40, 25, 55, 0.4) !important;
+  border-color: #607afb !important;
+}
+
+
+/* Animaciones para botones de categoría */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
