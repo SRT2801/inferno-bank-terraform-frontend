@@ -4,6 +4,7 @@
 [![Terraform](https://img.shields.io/badge/Terraform-1.0+-623CE4.svg)](https://terraform.io/)
 [![AWS](https://img.shields.io/badge/AWS-Cloud-orange.svg)](https://aws.amazon.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-Latest-38B2AC.svg)](https://tailwindcss.com/)
 
 > Una aplicación bancaria moderna con frontend Angular y infraestructura automatizada en AWS usando Terraform.
 
@@ -38,13 +39,16 @@ myCatalogoPage/
 ## 🚀 Características
 
 ### Frontend (Angular)
+
 - ✅ **Interfaz Moderna**: Diseño responsive y user-friendly
 - ✅ **TypeScript**: Tipado fuerte para mejor mantenibilidad
 - ✅ **Angular 17+**: Última versión con mejoras de rendimiento
+- ✅ **Tailwind CSS**: Framework CSS utility-first para estilos rápidos y consistentes
 - ✅ **Vite**: Build tool ultra-rápido para desarrollo
 - ✅ **PWA Ready**: Preparado para Progressive Web App
 
 ### Infraestructura (Terraform)
+
 - ✅ **Infrastructure as Code**: Infraestructura versionada y reproducible
 - ✅ **AWS Integration**: Despliegue nativo en Amazon Web Services
 - ✅ **Multi-Environment**: Soporte para múltiples entornos (dev, staging, prod)
@@ -54,6 +58,7 @@ myCatalogoPage/
 ## 📁 Estructura del Proyecto
 
 ### 📱 Frontend (`/app`)
+
 ```
 app/
 ├── src/
@@ -68,6 +73,7 @@ app/
 ```
 
 ### 🏗️ Infraestructura (`/terraform`)
+
 ```
 terraform/
 ├── main.tf              # Recursos principales AWS
@@ -82,17 +88,20 @@ terraform/
 ## ⚙️ Tecnologías Utilizadas
 
 ### Frontend
-| Tecnología | Versión | Propósito |
-|------------|---------|-----------|
-| ![Angular](https://img.shields.io/badge/-Angular-red?logo=angular) | 17+ | Framework principal |
-| ![TypeScript](https://img.shields.io/badge/-TypeScript-blue?logo=typescript) | 5.0+ | Lenguaje de programación |
-| ![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite) | Latest | Build tool y dev server |
+
+| Tecnología                                                                             | Versión | Propósito                   |
+| -------------------------------------------------------------------------------------- | ------- | --------------------------- |
+| ![Angular](https://img.shields.io/badge/-Angular-red?logo=angular)                     | 17+     | Framework principal         |
+| ![TypeScript](https://img.shields.io/badge/-TypeScript-blue?logo=typescript)           | 5.0+    | Lenguaje de programación    |
+| ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?logo=tailwind-css) | Latest  | Framework CSS utility-first |
+| ![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite)                           | Latest  | Build tool y dev server     |
 
 ### Infraestructura
-| Tecnología | Versión | Propósito |
-|------------|---------|-----------|
-| ![Terraform](https://img.shields.io/badge/-Terraform-623CE4?logo=terraform) | 1.0+ | Infrastructure as Code |
-| ![AWS](https://img.shields.io/badge/-AWS-FF9900?logo=amazon-aws) | Latest | Cloud Provider |
+
+| Tecnología                                                                  | Versión | Propósito              |
+| --------------------------------------------------------------------------- | ------- | ---------------------- |
+| ![Terraform](https://img.shields.io/badge/-Terraform-623CE4?logo=terraform) | 1.0+    | Infrastructure as Code |
+| ![AWS](https://img.shields.io/badge/-AWS-FF9900?logo=amazon-aws)            | Latest  | Cloud Provider         |
 
 ## 🛠️ Instalación y Configuración
 
@@ -108,17 +117,20 @@ terraform/
 ### 🏃‍♂️ Inicio Rápido
 
 1. **Clonar el repositorio**
+
    ```bash
    git clone https://github.com/SRT2801/inferno-bank-terraform-frontend.git
    cd inferno-bank-terraform-frontend
    ```
 
 2. **Configurar Frontend**
+
    ```bash
    cd app
    npm install
    npm start
    ```
+
    🌐 La aplicación estará disponible en `http://localhost:4200`
 
 3. **Configurar Infraestructura**
@@ -187,20 +199,20 @@ graph TD
 
 ### Frontend (`/app`)
 
-| Script | Comando | Descripción |
-|--------|---------|-------------|
-| **Desarrollo** | `npm start` | Servidor de desarrollo |
-| **Build** | `npm run build` | Build para producción |
-| **Test** | `npm test` | Ejecutar pruebas |
-| **Lint** | `npm run lint` | Análisis de código |
+| Script         | Comando         | Descripción            |
+| -------------- | --------------- | ---------------------- |
+| **Desarrollo** | `npm start`     | Servidor de desarrollo |
+| **Build**      | `npm run build` | Build para producción  |
+| **Test**       | `npm test`      | Ejecutar pruebas       |
+| **Lint**       | `npm run lint`  | Análisis de código     |
 
 ### Infraestructura (`/terraform`)
 
-| Script | Comando | Descripción |
-|--------|---------|-------------|
-| **Deploy** | `./deploy.sh` | Despliegue completo |
-| **Plan** | `terraform plan` | Ver cambios planeados |
-| **Apply** | `terraform apply` | Aplicar cambios |
+| Script      | Comando             | Descripción              |
+| ----------- | ------------------- | ------------------------ |
+| **Deploy**  | `./deploy.sh`       | Despliegue completo      |
+| **Plan**    | `terraform plan`    | Ver cambios planeados    |
+| **Apply**   | `terraform apply`   | Aplicar cambios          |
 | **Destroy** | `terraform destroy` | Eliminar infraestructura |
 
 ## 📚 Documentación
