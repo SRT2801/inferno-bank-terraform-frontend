@@ -34,14 +34,30 @@
 
   <!-- Grid de servicios -->
   <section class="services-section">
-    <div class="services-grid" *ngIf="filteredServices.length > 0">
+    <!-- Estado de carga -->
+    <div class="loading-state" *ngIf="loading">
+      <div class="loading-spinner">⏳</div>
+      <h3>Cargando servicios...</h3>
+      <p>Obteniendo la información más reciente del catálogo</p>
+    </div>
+
+    <!-- Estado de error -->
+    <div class="error-state" *ngIf="error && !loading">
+      <div class="error-icon">❌</div>
+      <h3>Error al cargar servicios</h3>
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="loadServices()">Reintentar</button>
+    </div>
+
+    <!-- Grid de servicios -->
+    <div class="services-grid" *ngIf="!loading && !error && filteredServices.length > 0">
       <app-service-card *ngFor="let service of filteredServices; trackBy: trackByServiceId" [service]="service"
         [disabled]="service.estado !== 'Activo'" (selectService)="onServiceSelected($event)">
       </app-service-card>
     </div>
 
     <!-- Mensaje cuando no hay servicios -->
-    <div class="no-services" *ngIf="filteredServices.length === 0">
+    <div class="no-services" *ngIf="!loading && !error && filteredServices.length === 0">
       <div class="no-services-icon">📦</div>
       <h3>No hay servicios disponibles</h3>
       <p>No se encontraron servicios para la categoría seleccionada.</p>
