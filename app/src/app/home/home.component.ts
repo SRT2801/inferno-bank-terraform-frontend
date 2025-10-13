@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Service } from '../shared/models/service.interface';
 import { CatalogService } from '../shared/services/catalog.service';
+import { HeaderComponent } from '../shared/components/header/header.component';
+import { FilterComponent } from '../shared/components/filter/filter.component';
 
 @Component({
   selector: 'app-home2',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent, FilterComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
@@ -21,7 +23,6 @@ export class HomeComponent implements OnInit {
   filteredServices: Service[] = [];
 
   constructor(private catalogService: CatalogService) {}
-
 
   get totalServices(): number {
     return this.services.length;
@@ -86,6 +87,16 @@ export class HomeComponent implements OnInit {
   }
 
   selectCategory(category: string) {
+    this.selectedCategory = category;
+    this.filterServices();
+  }
+
+  onSearchTermChange(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.filterServices();
+  }
+
+  onCategorySelect(category: string) {
     this.selectedCategory = category;
     this.filterServices();
   }
