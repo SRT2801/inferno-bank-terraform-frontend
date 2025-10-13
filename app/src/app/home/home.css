@@ -1,0 +1,413 @@
+/* Importar fuentes de Google */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+/* Configuración del host del componente */
+:host {
+  display: block;
+  font-family: 'Manrope', sans-serif;
+  min-height: 100vh;
+  background-color: #3b0764;
+  background-image: radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 0%),
+    radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(355, 98%, 76%, 1) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsla(256, 96%, 68%, 1) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
+    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
+    radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: white;
+}
+
+/* Tema oscuro */
+:host-context(.dark) {
+  background-color: #1a0230;
+  background-image: radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.4) 0px, transparent 0%),
+    radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 0.4) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, hsla(355, 98%, 76%, 0.4) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, hsla(256, 96%, 68%, 0.4) 0px, transparent 50%),
+    radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 0.4) 0px, transparent 50%),
+    radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 0.4) 0px, transparent 50%),
+    radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 0.4) 0px, transparent 50%);
+  color: white;
+}
+
+/* Clase para tarjetas de cristal */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+:host-context(.dark) .glass-card {
+  background: rgba(40, 25, 55, 0.2);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+/* Botones de cristal */
+.glass-button {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
+:host-context(.dark) .glass-button {
+  background: rgba(167, 139, 250, 0.2);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+/* SOBRESCRIBIR COLORES DE TAILWIND - FORZAR COLORES CORRECTOS */
+
+/* Textos principales - Blanco puro para máxima legibilidad */
+.text-text-light,
+.dark .text-text-dark {
+  color: #ffffff !important;
+}
+
+/* Textos secundarios - Gris muy claro */
+.text-subtext-light,
+.dark .text-subtext-dark {
+  color: #e5e5e5 !important;
+}
+
+/* Color primario para precios */
+.text-primary-dark {
+  color: #607afb !important;
+}
+
+/* Fondos de botones primarios */
+.bg-primary-dark {
+  background-color: #4f46e5 !important;
+}
+
+/* Clases específicas para mejor contraste */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffffff !important;
+}
+
+p {
+  color: #e5e5e5 !important;
+}
+
+/* Efectos hover */
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s ease-in-out;
+}
+
+:host-context(.dark) .glass-button:hover {
+  background: rgba(167, 139, 250, 0.3) !important;
+}
+
+/* Animaciones para las tarjetas */
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Efectos de desenfoque para los elementos decorativos */
+.blur-2xl {
+  filter: blur(40px);
+}
+
+/* Estilos para el input de búsqueda */
+input.glass-button {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+input.glass-button:focus {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: #607afb !important;
+  box-shadow: 0 0 0 3px rgba(96, 122, 251, 0.1) !important;
+}
+
+input.glass-button::placeholder {
+  color: #cccccc !important;
+}
+
+:host-context(.dark) input.glass-button {
+  background: rgba(40, 25, 55, 0.3) !important;
+  color: #ffffff !important;
+}
+
+:host-context(.dark) input.glass-button:focus {
+  background: rgba(40, 25, 55, 0.4) !important;
+  border-color: #607afb !important;
+}
+
+/* Estilos para los badges/etiquetas */
+.bg-blue-100\/50 {
+  background-color: rgba(219, 234, 254, 0.5);
+}
+
+:host-context(.dark) .bg-blue-900\/50 {
+  background-color: rgba(30, 58, 138, 0.5);
+}
+
+.bg-pink-100\/50 {
+  background-color: rgba(252, 231, 243, 0.5);
+}
+
+:host-context(.dark) .bg-pink-900\/50 {
+  background-color: rgba(131, 24, 67, 0.5);
+}
+
+.bg-indigo-100\/50 {
+  background-color: rgba(224, 231, 255, 0.5);
+}
+
+:host-context(.dark) .bg-indigo-900\/50 {
+  background-color: rgba(49, 46, 129, 0.5);
+}
+
+.bg-yellow-100\/50 {
+  background-color: rgba(254, 249, 195, 0.5);
+}
+
+:host-context(.dark) .bg-yellow-900\/50 {
+  background-color: rgba(113, 63, 18, 0.5);
+}
+
+.bg-purple-100\/50 {
+  background-color: rgba(243, 232, 255, 0.5);
+}
+
+:host-context(.dark) .bg-purple-900\/50 {
+  background-color: rgba(88, 28, 135, 0.5);
+}
+
+.bg-teal-100\/50 {
+  background-color: rgba(204, 251, 241, 0.5);
+}
+
+:host-context(.dark) .bg-teal-900\/50 {
+  background-color: rgba(19, 78, 74, 0.5);
+}
+
+.bg-green-100\/50 {
+  background-color: rgba(220, 252, 231, 0.5);
+}
+
+:host-context(.dark) .bg-green-900\/50 {
+  background-color: rgba(20, 83, 45, 0.5);
+}
+
+.bg-red-100\/50 {
+  background-color: rgba(254, 226, 226, 0.5);
+}
+
+:host-context(.dark) .bg-red-900\/50 {
+  background-color: rgba(127, 29, 29, 0.5);
+}
+
+/* Colores de texto para badges */
+.text-blue-800 {
+  color: #1e40af;
+}
+
+:host-context(.dark) .text-blue-200 {
+  color: #bfdbfe;
+}
+
+.text-pink-800 {
+  color: #9d174d;
+}
+
+:host-context(.dark) .text-pink-200 {
+  color: #fbcfe8;
+}
+
+.text-indigo-800 {
+  color: #3730a3;
+}
+
+:host-context(.dark) .text-indigo-200 {
+  color: #c7d2fe;
+}
+
+.text-yellow-800 {
+  color: #92400e;
+}
+
+:host-context(.dark) .text-yellow-200 {
+  color: #fde68a;
+}
+
+.text-purple-800 {
+  color: #6b21a8;
+}
+
+:host-context(.dark) .text-purple-200 {
+  color: #e9d5ff;
+}
+
+.text-teal-800 {
+  color: #115e59;
+}
+
+:host-context(.dark) .text-teal-200 {
+  color: #99f6e4;
+}
+
+.text-green-800 {
+  color: #166534;
+}
+
+:host-context(.dark) .text-green-200 {
+  color: #bbf7d0;
+}
+
+.text-red-800 {
+  color: #991b1b;
+}
+
+:host-context(.dark) .text-red-200 {
+  color: #fecaca;
+}
+
+/* Animaciones y transiciones suaves */
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+/* SOBRESCRIBIR TODOS LOS COLORES DE TEXTO DE TAILWIND */
+/* Para máxima legibilidad y contraste */
+
+/* Sobrescribir colores de texto principales */
+:host .text-text-light,
+:host .dark\:text-text-dark,
+:host-context(.dark) .text-text-light,
+:host-context(.dark) .dark\:text-text-dark {
+  color: #ffffff !important;
+}
+
+/* Sobrescribir colores de texto secundarios */
+:host .text-subtext-light,
+:host .dark\:text-subtext-dark,
+:host-context(.dark) .text-subtext-light,
+:host-context(.dark) .dark\:text-subtext-dark {
+  color: #e5e5e5 !important;
+}
+
+/* Colores específicos para badges de categorías - más brillantes */
+:host .text-blue-800,
+:host-context(.dark) .dark\:text-blue-200 {
+  color: #60a5fa !important;
+}
+
+:host .text-pink-800,
+:host-context(.dark) .dark\:text-pink-200 {
+  color: #f472b6 !important;
+}
+
+:host .text-indigo-800,
+:host-context(.dark) .dark\:text-indigo-200 {
+  color: #a78bfa !important;
+}
+
+:host .text-yellow-800,
+:host-context(.dark) .dark\:text-yellow-200 {
+  color: #fbbf24 !important;
+}
+
+:host .text-purple-800,
+:host-context(.dark) .dark\:text-purple-200 {
+  color: #c084fc !important;
+}
+
+:host .text-teal-800,
+:host-context(.dark) .dark\:text-teal-200 {
+  color: #2dd4bf !important;
+}
+
+:host .text-green-800,
+:host-context(.dark) .dark\:text-green-200 {
+  color: #4ade80 !important;
+}
+
+:host .text-red-800,
+:host-context(.dark) .dark\:text-red-200 {
+  color: #f87171 !important;
+}
+
+/* Asegurar que todos los textos dentro de las tarjetas sean blancos */
+:host .glass-card * {
+  color: #ffffff !important;
+}
+
+:host .glass-card .text-sm {
+  color: #e5e5e5 !important;
+}
+
+:host .glass-card .text-xs {
+  color: #d1d5db !important;
+}
+
+/* Colores para badges de estado */
+:host .bg-green-100\/50,
+:host-context(.dark) .dark\:bg-green-900\/50 {
+  background-color: rgba(34, 197, 94, 0.3) !important;
+}
+
+:host .bg-red-100\/50,
+:host-context(.dark) .dark\:bg-red-900\/50 {
+  background-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Responsividad mejorada */
+@media (max-width: 640px) {
+  .glass-card {
+    padding: 1rem;
+  }
+
+  header .flex {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    padding: 1rem 0;
+  }
+
+  header .flex > div {
+    margin-bottom: 1rem;
+  }
+
+  header .flex > div:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Estilo global para forzar texto blanco */
+:host * {
+  color: #ffffff;
+}
+
+:host .opacity-80,
+:host .opacity-90 {
+  color: #e5e5e5 !important;
+}
