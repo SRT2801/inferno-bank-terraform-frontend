@@ -47,26 +47,8 @@ export class PaymentTrackerComponent implements OnInit, OnDestroy {
   }
 
   private loadMockData(): void {
-    // Simular datos de próximos pagos para el home
-    setTimeout(() => {
-      this.paymentStatus = {
-        userId: 'user-123',
-        cardId: 'card-456',
-        service: {
-          id: 1,
-          categoria: 'Streaming',
-          proveedor: 'Netflix',
-          servicio: 'Plan Estándar',
-          plan: 'Mensual',
-          precio_mensual: 35000,
-          detalles: 'Próximo pago programado',
-          estado: 'Activo',
-        },
-        traceId: 'mock-trace-123',
-        status: 'INITIAL',
-        timestamp: new Date().toISOString(),
-      };
-    }, 1000);
+    // Solo mostrar mensaje de que no hay datos disponibles
+    this.paymentStatus = null;
   }
 
   getStatusMessage(): string {
