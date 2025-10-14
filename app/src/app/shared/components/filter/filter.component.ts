@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.css']
+  styleUrls: ['./filter.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent {
   @Input() searchTerm: string = '';
@@ -24,5 +25,10 @@ export class FilterComponent {
 
   selectCategory(category: string) {
     this.categorySelect.emit(category);
+  }
+
+  // TrackBy para las categorías
+  trackByCategory(index: number, category: string): string {
+    return category;
   }
 }
