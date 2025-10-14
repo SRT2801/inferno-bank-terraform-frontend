@@ -7,7 +7,7 @@ import { HeaderComponent } from '../shared/components/header/header.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 
 @Component({
-  selector: 'app-home2',
+  selector: 'app-home',
   imports: [CommonModule, FormsModule, HeaderComponent, FilterComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
