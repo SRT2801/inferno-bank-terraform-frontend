@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 echo "Starting deployment..."
 
@@ -24,5 +23,4 @@ aws cloudfront create-invalidation \
     --paths "/*"
 
 echo "Deployment completed successfully."
-
-echo "Your app is live at: https://$(terraform output -raw cloudfront_domain_name)|"
+echo "Your app is live at: https://$(terraform output -raw cloudfront_domain_name)"
