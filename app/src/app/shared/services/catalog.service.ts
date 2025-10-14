@@ -1,23 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Service} from '../models/service.interface';
+import { Observable, of } from 'rxjs';
+import { map, shareReplay, catchError } from 'rxjs/operators';
+import { Service } from '../models/service.interface';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CatalogService {
+  private cache$: Observable<Service[]> | null = null;
+  private cacheTime: number = 0;
+  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
+
   constructor(private http: HttpClient) {}
 
   getCatalog(): Observable<Service[]> {
-    return this.http.get<any>(environment.catalogApiUrl).pipe(
+    const now = Date.now();
+
+    if (this.cache$ && now - this.cacheTime < this.CACHE_DURATION) {
+      return this.cache$;
+    }
+
+    this.cache$ = this.http.get<any>(environment.catalogApiUrl).pipe(
       map((response: any) => {
         const items = response.response.data.items;
         return items.map((item: any) => this.mapApiDataToService(item));
+      }),
+      shareReplay(1),
+      catchError((error) => {
+        console.error('Error fetching catalog:', error);
+        this.cache$ = null;
+        throw error;
       })
     );
+
+    this.cacheTime = now;
+    return this.cache$;
+  }
+
+  clearCache(): void {
+    this.cache$ = null;
+    this.cacheTime = 0;
   }
 
   private mapApiDataToService(apiData: any): Service {
@@ -29,7 +53,7 @@ export class CatalogService {
       plan: apiData.Plan,
       precioMensual: apiData['Precio mensual'],
       velocidadDetalles: apiData['Velocidad/Detalles'],
-      estado: apiData.Estado
+      estado: apiData.Estado,
     };
   }
 }
