@@ -271,8 +271,7 @@ p {
   transition-duration: 300ms;
 }
 
-/* SOBRESCRIBIR TODOS LOS COLORES DE TEXTO DE TAILWIND */
-/* Para máxima legibilidad y contraste */
+
 
 /* Sobrescribir colores de texto principales */
 :host .text-text-light,
