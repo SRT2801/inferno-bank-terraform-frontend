@@ -6,7 +6,6 @@
 :host {
   display: block;
   font-family: 'Manrope', sans-serif;
-  min-height: 100vh;
   background-color: #3b0764;
   background-image: radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 0%),
     radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
@@ -17,6 +16,22 @@
     radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
   background-attachment: fixed;
   color: white;
+}
+
+:host > div {
+  animation: fadeInUp 0.6s ease-out;
+  min-height: 100vh;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Tema oscuro */
@@ -108,13 +123,6 @@ p {
 
 :host-context(.dark) .glass-button:hover {
   background: rgba(167, 139, 250, 0.3) !important;
-}
-
-/* Animaciones para las tarjetas */
-.glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
-  transition: all 0.3s ease-in-out;
 }
 
 /* Efectos de desenfoque para los elementos decorativos */
@@ -326,7 +334,6 @@ p {
   color: #f87171 !important;
 }
 
-/* Asegurar que todos los textos dentro de las tarjetas sean blancos */
 :host .glass-card * {
   color: #ffffff !important;
 }
@@ -382,11 +389,6 @@ p {
   color: #e5e5e5 !important;
 }
 
-/* ===================================
-   ANIMACIONES ESPECTACULARES
-   =================================== */
-
-/* Perspectiva 3D para el contenedor principal */
 :host > div {
   perspective: 2000px;
   perspective-origin: center;
@@ -481,16 +483,6 @@ p {
   }
 }
 
-/* Aplicar animaciones a elementos */
-.glass-card {
-  animation: float 6s ease-in-out infinite;
-  will-change: transform;
-}
-
-.glass-card:hover {
-  animation: energy-pulse 0.6s ease-in-out, float 6s ease-in-out infinite;
-}
-
 /* Efecto de entrada para las tarjetas de estadísticas */
 .stagger-item {
   transform-style: preserve-3d;
@@ -554,11 +546,6 @@ p {
   pointer-events: none;
 }
 
-.glass-card:hover::after {
-  width: 300%;
-  height: 300%;
-}
-
 /* Optimización de rendimiento */
 .stagger-item,
 .glass-card {
@@ -584,11 +571,6 @@ p {
   background-size: 200% 200%;
 }
 
-/* ===================================
-   PARTÍCULAS EXPLOSIVAS
-   =================================== */
-
-/* Crear partículas con pseudo-elementos */
 @keyframes particle-explosion {
   0% {
     transform: translate(0, 0) scale(1);
@@ -611,14 +593,6 @@ p {
   }
 }
 
-/* Animación de entrada espectacular para todo el contenedor */
-/* DESACTIVADA - Sin animaciones de entrada
-:host > div {
-  animation: explosive-zoom 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-    page-shockwave 1s ease-out 0.3s;
-}
-*/
-
 /* Efecto de brillo intenso al inicio */
 @keyframes intense-glow {
   0% {
@@ -636,11 +610,9 @@ p {
 }
 
 /* Aplicar efecto de brillo a las cards principales */
-/* DESACTIVADA - Sin animaciones de entrada
 :host .lg\:col-span-3 {
-  animation: intense-glow 1.5s ease-out, float 6s ease-in-out 1.5s infinite;
+  animation: intense-glow 1.5s ease-out;
 }
-*/
 
 /* Efecto de cristal roto al cargar */
 @keyframes glass-shatter {
@@ -677,18 +649,11 @@ p {
 }
 
 /* Aplicar a los números de las estadísticas */
-/* DESACTIVADA - Sin animaciones de entrada
 :host .text-3xl,
 :host .text-2xl {
   display: inline-block;
   animation: counter-pop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
   animation-delay: calc(var(--item-index, 0) * 0.1s + 1s);
-}
-*/
-
-:host .text-3xl,
-:host .text-2xl {
-  display: inline-block;
 }
 
 /* Efecto de arcoíris giratorio */

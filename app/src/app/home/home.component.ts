@@ -57,6 +57,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.loadServices();
   }
 
@@ -159,7 +160,6 @@ export class HomeComponent implements OnInit {
   private checkAndStartTour(): void {
     const hasSeenTour = localStorage.getItem('hasSeenTour');
 
-    // NO iniciar el tour automáticamente en móvil
     if (!hasSeenTour && !this.isMobile()) {
       setTimeout(() => {
         this.tourService.startHomeTour();
