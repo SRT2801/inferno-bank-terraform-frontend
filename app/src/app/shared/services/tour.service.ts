@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { driver, DriveStep, Driver } from 'driver.js';
-import 'driver.js/dist/driver.css';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TourService {
-  private driverObj: Driver | null = null;
+  private driverObj: any = null;
 
   constructor() {}
 
-  startHomeTour(): void {
+  async startHomeTour(): Promise<void> {
+    // Lazy load driver.js solo cuando se necesita
+    const { driver } = await import('driver.js');
+
     this.driverObj = driver({
       showProgress: true,
       showButtons: ['next', 'previous', 'close'],
