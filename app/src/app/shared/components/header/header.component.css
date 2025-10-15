@@ -1,2 +1,11 @@
-/* El componente header usa las clases de Tailwind CSS globales,
-   por lo que no necesita estilos específicos adicionales */
+/* Estilos adicionales para el header */
+header {
+  background: rgba(40, 25, 55, 0.65) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Soporte para tema claro */
+:host-context(.light) header {
+  background: rgba(255, 255, 255, 0.65) !important;
+}

@@ -25,15 +25,12 @@ export class HeaderComponent {
 
   logout(): void {
     this.alertService.confirm(
-      '¿Estás seguro?',
-      'Cerrarás sesión en Inferno Bank Services',
+      '¿Are you sure?',
+      'You will log out of Inferno Bank Services',
       () => {
         this.authService.logout();
-        this.alertService.success('Sesión cerrada', 'Has cerrado sesión correctamente');
+        this.alertService.success('Logged out', 'You have successfully logged out');
       },
-      () => {
-        this.alertService.info('Cancelado', 'Tu sesión permanece activa');
-      }
     );
   }
 }
