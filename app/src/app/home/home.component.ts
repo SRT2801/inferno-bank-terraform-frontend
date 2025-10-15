@@ -19,16 +19,14 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
     trigger('pageEnter', [
       transition(':enter', [
         style({
-          transform: 'scale(0.3) rotateX(-80deg) rotateZ(-20deg)',
           opacity: 0,
-          filter: 'blur(20px)',
+          transform: 'translateY(40px) scale(0.95)',
         }),
         animate(
-          '1000ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+          '700ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           style({
-            transform: 'scale(1) rotateX(0deg) rotateZ(0deg)',
             opacity: 1,
-            filter: 'blur(0px)',
+            transform: 'translateY(0) scale(1)',
           })
         ),
       ]),
@@ -40,16 +38,14 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
           [
             style({
               opacity: 0,
-              transform: 'translateY(50px) scale(0.8) rotateX(-30deg)',
-              filter: 'blur(10px)',
+              transform: 'translateY(30px) scale(0.9)',
             }),
-            stagger('100ms', [
+            stagger('60ms', [
               animate(
-                '800ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                '600ms cubic-bezier(0.34, 1.56, 0.64, 1)',
                 style({
                   opacity: 1,
-                  transform: 'translateY(0) scale(1) rotateX(0deg)',
-                  filter: 'blur(0px)',
+                  transform: 'translateY(0) scale(1)',
                 })
               ),
             ]),
@@ -116,10 +112,10 @@ export class HomeComponent implements OnInit {
         this.updateCategories();
         this.filterServices();
         this.loading = false;
-        this.cdr.markForCheck()
+        this.cdr.markForCheck();
         this.checkAndStartTour();
       },
-      
+
       error: (err) => {
         console.error('Error loading services:', err);
         this.error = 'Error al cargar los servicios. Por favor, intenta de nuevo.';
@@ -201,7 +197,6 @@ export class HomeComponent implements OnInit {
     const hasSeenTour = localStorage.getItem('hasSeenTour');
 
     if (!hasSeenTour) {
-
       setTimeout(() => {
         this.tourService.startHomeTour();
         localStorage.setItem('hasSeenTour', 'true');
