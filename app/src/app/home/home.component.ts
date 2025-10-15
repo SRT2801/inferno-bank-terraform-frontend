@@ -7,6 +7,7 @@ import { TourService } from '../shared/services/tour.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { ServicesGridComponent } from '../shared/components/services-grid/services-grid.component';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private catalogService: CatalogService,
     private cdr: ChangeDetectorRef,
-    private tourService: TourService
+    private tourService: TourService,
+    private authService: AuthService
   ) {}
 
   get totalServices(): number {
@@ -57,8 +59,21 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    window.scrollTo(0, 0);
+    this.checkMobileDevice();
     this.loadServices();
+
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser) {
+      const tourKey = `hasSeenTour_${currentUser.email}`;
+      const hasSeenTour = localStorage.getItem(tourKey) === 'true';
+
+      if (!hasSeenTour) {
+        setTimeout(() => {
+          this.startTour();
+          localStorage.setItem(tourKey, 'true');
+        }, 2000);
+      }
+    }
   }
 
   loadServices() {
@@ -167,7 +182,16 @@ export class HomeComponent implements OnInit {
       }, 2000);
     }
   }
-  startTour(): void {
+  startTour() {
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser) return;
+
     this.tourService.startHomeTour();
+  }
+
+  checkMobileDevice() {
+    const isMobile = window.innerWidth < 768;
+    document.body.classList.toggle('mobile', isMobile);
+    document.body.classList.toggle('desktop', !isMobile);
   }
 }
