@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+/* Import driver.js CSS globally */
+@import 'driver.js/dist/driver.css';
+
 @layer utilities {
   .bg-card-light\/30 {
     background-color: rgba(255, 255, 255, 0.12) !important;
