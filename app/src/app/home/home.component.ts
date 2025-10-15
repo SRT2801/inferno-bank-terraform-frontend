@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Service } from '../shared/models/service.interface';
 import { CatalogService } from '../shared/services/catalog.service';
+import { TourService } from '../shared/services/tour.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { ServicesGridComponent } from '../shared/components/services-grid/services-grid.component';
@@ -74,7 +75,11 @@ export class HomeComponent implements OnInit {
   private _inactiveServices: number = 0;
   private _totalCost: number = 0;
 
-  constructor(private catalogService: CatalogService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private catalogService: CatalogService,
+    private cdr: ChangeDetectorRef,
+    private tourService: TourService
+  ) {}
 
   get totalServices(): number {
     return this._totalServices;
@@ -111,8 +116,10 @@ export class HomeComponent implements OnInit {
         this.updateCategories();
         this.filterServices();
         this.loading = false;
-        this.cdr.markForCheck();
+        this.cdr.markForCheck()
+        this.checkAndStartTour();
       },
+      
       error: (err) => {
         console.error('Error loading services:', err);
         this.error = 'Error al cargar los servicios. Por favor, intenta de nuevo.';
@@ -188,5 +195,20 @@ export class HomeComponent implements OnInit {
 
   formatPrice(price: number): string {
     return new Intl.NumberFormat('es-CO').format(price || 0);
+  }
+
+  private checkAndStartTour(): void {
+    const hasSeenTour = localStorage.getItem('hasSeenTour');
+
+    if (!hasSeenTour) {
+
+      setTimeout(() => {
+        this.tourService.startHomeTour();
+        localStorage.setItem('hasSeenTour', 'true');
+      }, 2000);
+    }
+  }
+  startTour(): void {
+    this.tourService.startHomeTour();
   }
 }
