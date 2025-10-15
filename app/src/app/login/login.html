@@ -10,7 +10,7 @@
   </div>
 
   <!-- Login Card -->
-  <div class="w-full max-w-md relative z-10">
+  <div class="w-full max-w-md relative z-10" [@rotateAnimation]>
     <!-- Logo/Header -->
     <div class="text-center mb-8">
       <div class="glass-card inline-block p-4 rounded-2xl mb-4">
@@ -25,16 +25,6 @@
     <!-- Login Form Card -->
     <div class="glass-card p-8 rounded-2xl shadow-2xl">
       <form (ngSubmit)="onSubmit()" class="space-y-6">
-        <!-- Error Message -->
-        <div *ngIf="error" class="glass-card p-4 rounded-xl border border-red-500/30 bg-red-500/10">
-          <div class="flex items-center">
-            <span class="material-symbols-outlined text-red-400 mr-2">
-              error
-            </span>
-            <p class="text-red-300 text-sm">{{error}}</p>
-          </div>
-        </div>
-
         <!-- Email Input -->
         <div>
           <label for="email" class="block text-sm font-medium text-white mb-2">

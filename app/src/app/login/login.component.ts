@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { AlertService } from '../shared/services/alert.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +12,14 @@ import { AuthService } from '../shared/services/auth.service';
   imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
+  animations: [
+    trigger('rotateAnimation', [
+      transition(':enter', [
+        style({ transform: 'rotateY(90deg)', opacity: 0 }),
+        animate('600ms ease-out', style({ transform: 'rotateY(0deg)', opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class LoginComponent {
   email: string = '';
@@ -17,24 +27,25 @@ export class LoginComponent {
   rememberMe: boolean = false;
   showPassword: boolean = false;
   loading: boolean = false;
-  error: string = '';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private alertService: AlertService
+  ) {}
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
 
   onSubmit(): void {
-    this.error = '';
-
     if (!this.email || !this.password) {
-      this.error = 'Por favor completa todos los campos';
+      this.alertService.error('Validation Error', 'Please complete all fields');
       return;
     }
 
     if (!this.isValidEmail(this.email)) {
-      this.error = 'Por favor ingresa un email válido';
+      this.alertService.error('Validation Error', 'Please enter a valid email');
       return;
     }
 
@@ -42,18 +53,18 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe({
       next: (success) => {
         this.loading = false;
-        console.log('Resultado del login:', success);
         if (success) {
           this.router.navigate(['/home']);
         } else {
-
-          console.error('Login falló: la respuesta no contiene token');
+          this.alertService.error('Login Failed', 'The response does not contain a valid token');
         }
       },
       error: (err) => {
         this.loading = false;
-        this.error = err.message || 'Error al iniciar sesión. Por favor intenta de nuevo.';
-        console.error('Error en login:', err);
+        this.alertService.error(
+          'Login Error',
+          err.message || 'An error occurred. Please try again.'
+        );
       },
     });
   }
@@ -64,8 +75,6 @@ export class LoginComponent {
   }
 
   goToRegister(): void {
-
-    console.log('Navegar a registro');
-    
+    this.router.navigate(['/register']);
   }
 }

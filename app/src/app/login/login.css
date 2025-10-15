@@ -220,3 +220,26 @@
   outline: 2px solid rgba(167, 139, 250, 0.8);
   outline-offset: 2px;
 }
+
+/* Animación de rotación para transición de página */
+@keyframes rotate-vertical-center {
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.rotate-vertical-center {
+  animation: rotate-vertical-center 1.6s ease-in-out;
+}
+
+/* Preserve 3D para animaciones */
+:host > div {
+  perspective: 2000px;
+}
+
+:host > div > div {
+  transform-style: preserve-3d;
+}
