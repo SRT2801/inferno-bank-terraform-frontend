@@ -15,6 +15,18 @@ export class ServicesGridComponent {
   @Input() error: string | null = null;
   @Input() trackByFn?: (index: number, service: Service) => any;
 
+  // Limitar elementos mostrados inicialmente en móvil
+  get displayedServices(): Service[] {
+    if (this.isMobile() && this.services.length > 8) {
+      return this.services.slice(0, 8);
+    }
+    return this.services;
+  }
+
+  private isMobile(): boolean {
+    return window.innerWidth < 768;
+  }
+
   trackByServiceId = (index: number, service: Service): any => {
     if (this.trackByFn) {
       return this.trackByFn(index, service);

@@ -20,17 +20,18 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
       transition(':enter', [
         style({
           opacity: 0,
-          transform: 'translateY(40px) scale(0.95)',
+          transform: 'translateY(20px)',
         }),
         animate(
-          '700ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          '400ms ease-out',
           style({
             opacity: 1,
-            transform: 'translateY(0) scale(1)',
+            transform: 'translateY(0)',
           })
         ),
       ]),
     ]),
+    // Animación stagger más ligera y condicional
     trigger('staggerAnimation', [
       transition(':enter', [
         query(
@@ -38,19 +39,19 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
           [
             style({
               opacity: 0,
-              transform: 'translateY(30px) scale(0.9)',
+              transform: 'translateY(15px)',
             }),
-            stagger('60ms', [
+            stagger('40ms', [
               animate(
-                '600ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                '350ms ease-out',
                 style({
                   opacity: 1,
-                  transform: 'translateY(0) scale(1)',
+                  transform: 'translateY(0)',
                 })
               ),
             ]),
           ],
-          { optional: true }
+          { optional: true, limit: 12 } // Limitar a 12 elementos máximo
         ),
       ]),
     ]),
@@ -193,10 +194,15 @@ export class HomeComponent implements OnInit {
     return new Intl.NumberFormat('es-CO').format(price || 0);
   }
 
+  private isMobile(): boolean {
+    return window.innerWidth < 768;
+  }
+
   private checkAndStartTour(): void {
     const hasSeenTour = localStorage.getItem('hasSeenTour');
 
-    if (!hasSeenTour) {
+    // NO iniciar el tour automáticamente en móvil
+    if (!hasSeenTour && !this.isMobile()) {
       setTimeout(() => {
         this.tourService.startHomeTour();
         localStorage.setItem('hasSeenTour', 'true');

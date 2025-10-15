@@ -9,7 +9,6 @@ export class TourService {
   constructor() {}
 
   async startHomeTour(): Promise<void> {
-    // Lazy load driver.js solo cuando se necesita
     const { driver } = await import('driver.js');
 
     this.driverObj = driver({
@@ -18,13 +17,14 @@ export class TourService {
       nextBtnText: 'Siguiente',
       prevBtnText: 'Anterior',
       doneBtnText: 'Finalizar',
+      animate: true,
+      smoothScroll: true,
       steps: [
         {
           element: '#catalog-section',
           popover: {
-            title: '¡Bienvenido a Nuestra Aplicación! 🎉',
-            description:
-              'En esta sección podrás encontrar todos los servicios disponibles que tenemos para ti. Explora y encuentra el servicio perfecto para tus necesidades.',
+            title: '¡Bienvenido! 🎉',
+            description: 'Aquí encontrarás todos los servicios disponibles.',
             side: 'bottom',
             align: 'start',
           },
@@ -32,9 +32,8 @@ export class TourService {
         {
           element: '#cost-section',
           popover: {
-            title: 'Panel de Estadísticas 📊',
-            description:
-              'Aquí puedes ver un resumen de tus servicios: total de servicios, servicios activos, inactivos y el costo total mensual de todos tus servicios contratados.',
+            title: 'Estadísticas 📊',
+            description: 'Resumen de servicios y costos totales.',
             side: 'left',
             align: 'start',
           },
@@ -42,9 +41,8 @@ export class TourService {
         {
           element: '#filter-section',
           popover: {
-            title: 'Filtros de Búsqueda 🔍',
-            description:
-              'Utiliza estos filtros para encontrar rápidamente el servicio que buscas. Puedes filtrar por categoría, precio y más.',
+            title: 'Filtros 🔍',
+            description: 'Filtra servicios por categoría.',
             side: 'bottom',
             align: 'start',
           },
@@ -52,9 +50,8 @@ export class TourService {
         {
           element: '#services-grid',
           popover: {
-            title: 'Servicios Disponibles 💼',
-            description:
-              'Aquí encontrarás todos nuestros servicios. Haz clic en cualquier tarjeta para ver más detalles y contratar.',
+            title: 'Servicios 💼',
+            description: 'Haz clic para ver detalles.',
             side: 'top',
             align: 'center',
           },
@@ -62,9 +59,8 @@ export class TourService {
         {
           element: '#user-profile',
           popover: {
-            title: 'Tu Perfil de Usuario 👤',
-            description:
-              'Desde aquí puedes acceder a tu perfil, ver tu información personal y cerrar sesión cuando termines de usar la aplicación.',
+            title: 'Perfil 👤',
+            description: 'Accede a tu perfil y cierra sesión aquí.',
             side: 'left',
             align: 'start',
           },
