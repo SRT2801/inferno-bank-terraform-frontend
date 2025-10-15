@@ -4,11 +4,10 @@ export interface Service {
   proveedor: string;
   servicio: string;
   plan: string;
-  precioMensual: number;
+  precioMensual: string;
   velocidadDetalles: string;
   estado: string;
 }
-
 
 export interface ApiResponse {
   message: string;
