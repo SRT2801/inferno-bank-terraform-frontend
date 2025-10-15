@@ -7,7 +7,6 @@ import { TourService } from '../shared/services/tour.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { ServicesGridComponent } from '../shared/components/services-grid/services-grid.component';
-import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -15,47 +14,6 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('pageEnter', [
-      transition(':enter', [
-        style({
-          opacity: 0,
-          transform: 'translateY(20px)',
-        }),
-        animate(
-          '400ms ease-out',
-          style({
-            opacity: 1,
-            transform: 'translateY(0)',
-          })
-        ),
-      ]),
-    ]),
-    // Animación stagger más ligera y condicional
-    trigger('staggerAnimation', [
-      transition(':enter', [
-        query(
-          '.stagger-item',
-          [
-            style({
-              opacity: 0,
-              transform: 'translateY(15px)',
-            }),
-            stagger('40ms', [
-              animate(
-                '350ms ease-out',
-                style({
-                  opacity: 1,
-                  transform: 'translateY(0)',
-                })
-              ),
-            ]),
-          ],
-          { optional: true, limit: 12 } // Limitar a 12 elementos máximo
-        ),
-      ]),
-    ]),
-  ],
 })
 export class HomeComponent implements OnInit {
   searchTerm: string = '';
