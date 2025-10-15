@@ -88,3 +88,151 @@
   font-display: swap;
   src: url('./assets/fonts/manrope-700.woff2') format('woff2');
 }
+
+/* Sonner Toast Customization - Inferno Bank Theme */
+:root {
+  /* Colores base del toast */
+  --sonner-toast-background: linear-gradient(
+    135deg,
+    rgba(40, 25, 55, 0.98),
+    rgba(30, 15, 45, 0.98)
+  );
+  --sonner-toast-border: rgba(167, 139, 250, 0.4);
+  --sonner-toast-color: #ffffff;
+
+  /* Colores específicos por tipo */
+  --sonner-success-bg: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(40, 25, 55, 0.98));
+  --sonner-success-border: rgba(34, 197, 94, 0.6);
+
+  --sonner-error-bg: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(40, 25, 55, 0.98));
+  --sonner-error-border: rgba(239, 68, 68, 0.6);
+
+  --sonner-warning-bg: linear-gradient(135deg, rgba(251, 146, 60, 0.2), rgba(40, 25, 55, 0.98));
+  --sonner-warning-border: rgba(251, 146, 60, 0.6);
+
+  --sonner-info-bg: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(40, 25, 55, 0.98));
+  --sonner-info-border: rgba(59, 130, 246, 0.6);
+}
+
+/* Estilos generales para todos los toasts */
+[data-sonner-toast] {
+  background: var(--sonner-toast-background) !important;
+  border: 1px solid var(--sonner-toast-border) !important;
+  color: var(--sonner-toast-color) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(167, 139, 250, 0.3) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 12px !important;
+}
+
+/* Toast de éxito */
+[data-sonner-toast][data-type='success'] {
+  background: var(--sonner-success-bg) !important;
+  border-color: var(--sonner-success-border) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(34, 197, 94, 0.3) !important;
+}
+
+/* Toast de error */
+[data-sonner-toast][data-type='error'] {
+  background: var(--sonner-error-bg) !important;
+  border-color: var(--sonner-error-border) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Toast de advertencia */
+[data-sonner-toast][data-type='warning'] {
+  background: var(--sonner-warning-bg) !important;
+  border-color: var(--sonner-warning-border) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(251, 146, 60, 0.3) !important;
+}
+
+/* Toast de información */
+[data-sonner-toast][data-type='info'] {
+  background: var(--sonner-info-bg) !important;
+  border-color: var(--sonner-info-border) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Título del toast */
+[data-sonner-toast] [data-title] {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Descripción del toast */
+[data-sonner-toast] [data-description] {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.875rem !important;
+}
+
+/* Botones de acción */
+[data-sonner-toast] [data-button] {
+  background: rgba(167, 139, 250, 0.2) !important;
+  border: 1px solid rgba(167, 139, 250, 0.4) !important;
+  color: #a78bfa !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.5rem !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-sonner-toast] [data-button]:hover {
+  background: rgba(167, 139, 250, 0.3) !important;
+  border-color: rgba(167, 139, 250, 0.6) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3) !important;
+}
+
+/* Botón de cancelar */
+[data-sonner-toast] [data-cancel-button] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+[data-sonner-toast] [data-cancel-button]:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Botón de cerrar */
+[data-sonner-toast] [data-close-button] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  transform: rotate(90deg) !important;
+}
+
+/* Icono del toast */
+[data-sonner-toast] [data-icon] {
+  filter: drop-shadow(0 0 8px currentColor) !important;
+}
+
+/* Animación de entrada */
+[data-sonner-toast][data-mounted] {
+  animation: slideIn 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) forwards !important;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Loading spinner personalizado */
+[data-sonner-toast][data-type='loading'] [data-icon] {
+  color: #a78bfa !important;
+}
