@@ -8,22 +8,23 @@ import { LoginResponse } from '../models/loginResponse.interface';
 import { User } from '../models/user.interface';
 import { AlertService } from './alert.service';
 
-
-
-
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly API_URL = environment.loginApiUrl;
+  private readonly REGISTER_API_URL = environment.registerApiUrl;
 
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
   private isAuthenticatedSubject: BehaviorSubject<boolean>;
   public isAuthenticated: Observable<boolean>;
 
-  constructor(private router: Router, private http: HttpClient, private alertService: AlertService) {
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private alertService: AlertService
+  ) {
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User | null>(
       storedUser ? JSON.parse(storedUser) : null
@@ -60,7 +61,7 @@ export class AuthService {
             this.currentUserSubject.next(user);
             this.isAuthenticatedSubject.next(true);
 
-           this.alertService.success('Successful login', `Welcome!, ${user.name}!`);
+            this.alertService.success('Successful login', `Welcome!, ${user.name}!`);
             return true;
           }
           console.error('La respuesta no contiene un token válido:', response);
@@ -104,7 +105,52 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  register(
+    name: string,
+    lastName: string,
+    email: string,
+    password: string,
+    document: string
+  ): Observable<boolean> {
+    return this.http
+      .post<any>(this.REGISTER_API_URL, {
+        name,
+        lastName,
+        email,
+        password,
+        document,
+      })
+      .pipe(
+        map((response: any) => {
+          this.alertService.success(
+            'Registration successful',
+            'Your account has been created. Please login.'
+          );
+          return true;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = 'Error al registrar. Por favor intenta de nuevo.';
 
+          if (error.error instanceof ErrorEvent) {
+            errorMessage = `Error: ${error.error.message}`;
+          } else {
+            switch (error.status) {
+              case 400:
+                errorMessage = 'Datos inválidos. Por favor verifica la información ingresada.';
+                break;
+              case 409:
+                errorMessage = 'Este email ya está registrado.';
+                break;
+              case 500:
+                errorMessage = 'Error del servidor. Por favor intenta más tarde.';
+                break;
+              default:
+                errorMessage = error.error?.message || `Error del servidor: ${error.status}`;
+            }
+          }
 
-
+          return throwError(() => new Error(errorMessage));
+        })
+      );
+  }
 }
