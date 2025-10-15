@@ -1,5 +1,8 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { AlertService } from '../../services/alert.service';
+import { User } from '../../models/user.interface';
 
 @Component({
   selector: 'app-header',
@@ -12,4 +15,25 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
   @Input() title: string = 'Inferno Bank Services';
   @Input() icon: string = 'hub';
+  @Input() showUserInfo: boolean = true;
+
+  constructor(public authService: AuthService, private alertService: AlertService) {}
+
+  get currentUser(): User | null {
+    return this.authService.currentUserValue;
+  }
+
+  logout(): void {
+    this.alertService.confirm(
+      '¿Estás seguro?',
+      'Cerrarás sesión en Inferno Bank Services',
+      () => {
+        this.authService.logout();
+        this.alertService.success('Sesión cerrada', 'Has cerrado sesión correctamente');
+      },
+      () => {
+        this.alertService.info('Cancelado', 'Tu sesión permanece activa');
+      }
+    );
+  }
 }
