@@ -39,8 +39,12 @@ export class ServicesGridComponent {
     );
   }
 
-  formatPrice(price: number): string {
-    return new Intl.NumberFormat('es-CO').format(price || 0);
+  formatPrice(price: string): string {
+    const numericPrice = parseFloat(price.replace(/[^0-9.]/g, '')) || 0;
+    return new Intl.NumberFormat('es-CO', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(numericPrice);
   }
 
   getServiceName(service: Service): string {
