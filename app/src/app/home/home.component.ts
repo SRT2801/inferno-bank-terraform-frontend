@@ -85,7 +85,6 @@ export class HomeComponent implements OnInit {
   private searchTimeout: any;
 
   filterServices() {
-    // Debounce para la búsqueda
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
@@ -112,7 +111,11 @@ export class HomeComponent implements OnInit {
     ).length;
     this._totalCost = this.services
       .filter((s) => s.estado?.toLowerCase() === 'activo')
-      .reduce((total, service) => total + (service.precioMensual || 0), 0);
+      .reduce((total, service) => {
+        const numericPrice =
+          parseFloat((service.precioMensual || '0').replace(/[^0-9.]/g, '')) || 0;
+        return total + numericPrice;
+      }, 0);
   }
 
   onSearchChange() {
