@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 export class CatalogService {
   private cache$: Observable<Service[]> | null = null;
   private cacheTime: number = 0;
-  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
+  private readonly CACHE_DURATION = 5 * 60 * 1000;
 
   constructor(private http: HttpClient) {}
 
@@ -51,7 +51,7 @@ export class CatalogService {
       proveedor: apiData.Proveedor,
       servicio: apiData.Servicio,
       plan: apiData.Plan,
-      precioMensual: apiData['Precio mensual'],
+      precioMensual: apiData['Precio Mensual'],
       velocidadDetalles: apiData['Velocidad/Detalles'],
       estado: apiData.Estado,
     };
