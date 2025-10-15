@@ -72,26 +72,26 @@ export class AuthService {
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'Ocurrió un error desconocido';
+    let errorMessage = 'An unknown error occurred';
 
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Error: ${error.error.message}`;
     } else {
       switch (error.status) {
         case 401:
-          errorMessage = 'Credenciales inválidas. Por favor verifica tu email y contraseña.';
+          errorMessage = 'Invalid credentials. Please check your email and password.';
           break;
         case 403:
-          errorMessage = 'Acceso denegado.';
+          errorMessage = 'Access denied.';
           break;
         case 404:
-          errorMessage = 'Servicio no encontrado.';
+          errorMessage = 'Service not found.';
           break;
         case 500:
-          errorMessage = 'Error del servidor. Por favor intenta más tarde.';
+          errorMessage = 'Server error. Please try again later.';
           break;
         default:
-          errorMessage = error.error?.message || `Error del servidor: ${error.status}`;
+          errorMessage = error.error?.message || `Server error: ${error.status}`;
       }
     }
 
@@ -129,23 +129,23 @@ export class AuthService {
           return true;
         }),
         catchError((error: HttpErrorResponse) => {
-          let errorMessage = 'Error al registrar. Por favor intenta de nuevo.';
+          let errorMessage = 'Error registering. Please try again.';
 
           if (error.error instanceof ErrorEvent) {
             errorMessage = `Error: ${error.error.message}`;
           } else {
             switch (error.status) {
               case 400:
-                errorMessage = 'Datos inválidos. Por favor verifica la información ingresada.';
+                errorMessage = 'Invalid data. Please check the information entered.';
                 break;
               case 409:
-                errorMessage = 'Este email ya está registrado.';
+                errorMessage = 'This email is already registered.';
                 break;
               case 500:
-                errorMessage = 'Error del servidor. Por favor intenta más tarde.';
+                errorMessage = 'Server error. Please try again later.';
                 break;
               default:
-                errorMessage = error.error?.message || `Error del servidor: ${error.status}`;
+                errorMessage = error.error?.message || `Server error: ${error.status}`;
             }
           }
 
