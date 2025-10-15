@@ -74,28 +74,25 @@ export class AuthService {
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred';
 
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      switch (error.status) {
-        case 401:
-          errorMessage = 'Invalid credentials. Please check your email and password.';
-          break;
-        case 403:
-          errorMessage = 'Access denied.';
-          break;
-        case 404:
-          errorMessage = 'Service not found.';
-          break;
-        case 500:
-          errorMessage = 'Server error. Please try again later.';
-          break;
-        default:
-          errorMessage = error.error?.message || `Server error: ${error.status}`;
-      }
+    try {
+      errorMessage =
+        error.error?.message || error.error?.error || this.getDefaultErrorMessage(error.status);
+    } catch (e) {
+      errorMessage = 'An error occurred while processing the request';
     }
 
     return throwError(() => new Error(errorMessage));
+  }
+
+  private getDefaultErrorMessage(status: number): string {
+    const errorMessages: { [key: number]: string } = {
+      401: 'Invalid credentials. Please check your email and password.',
+      403: 'Access denied.',
+      404: 'Service not found.',
+      500: 'Server error. Please try again later.',
+    };
+
+    return errorMessages[status] || `Server error: ${status}`;
   }
 
   logout(): void {
@@ -131,26 +128,27 @@ export class AuthService {
         catchError((error: HttpErrorResponse) => {
           let errorMessage = 'Error registering. Please try again.';
 
-          if (error.error instanceof ErrorEvent) {
-            errorMessage = `Error: ${error.error.message}`;
-          } else {
-            switch (error.status) {
-              case 400:
-                errorMessage = 'Invalid data. Please check the information entered.';
-                break;
-              case 409:
-                errorMessage = 'This email is already registered.';
-                break;
-              case 500:
-                errorMessage = 'Server error. Please try again later.';
-                break;
-              default:
-                errorMessage = error.error?.message || `Server error: ${error.status}`;
-            }
+          try {
+            errorMessage =
+              error.error?.message ||
+              error.error?.error ||
+              this.getRegisterErrorMessage(error.status);
+          } catch (e) {
+            errorMessage = 'An error occurred while processing the registration';
           }
 
           return throwError(() => new Error(errorMessage));
         })
       );
+  }
+
+  private getRegisterErrorMessage(status: number): string {
+    const errorMessages: { [key: number]: string } = {
+      400: 'Invalid data. Please check the information entered.',
+      409: 'This information is already registered.',
+      500: 'Server error. Please try again later.',
+    };
+
+    return errorMessages[status] || `Server error: ${status}`;
   }
 }
