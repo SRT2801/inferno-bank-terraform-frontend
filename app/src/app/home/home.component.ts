@@ -6,6 +6,7 @@ import { CatalogService } from '../shared/services/catalog.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { ServicesGridComponent } from '../shared/components/services-grid/services-grid.component';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,50 @@ import { ServicesGridComponent } from '../shared/components/services-grid/servic
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('pageEnter', [
+      transition(':enter', [
+        style({
+          transform: 'scale(0.3) rotateX(-80deg) rotateZ(-20deg)',
+          opacity: 0,
+          filter: 'blur(20px)',
+        }),
+        animate(
+          '1000ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+          style({
+            transform: 'scale(1) rotateX(0deg) rotateZ(0deg)',
+            opacity: 1,
+            filter: 'blur(0px)',
+          })
+        ),
+      ]),
+    ]),
+    trigger('staggerAnimation', [
+      transition(':enter', [
+        query(
+          '.stagger-item',
+          [
+            style({
+              opacity: 0,
+              transform: 'translateY(50px) scale(0.8) rotateX(-30deg)',
+              filter: 'blur(10px)',
+            }),
+            stagger('100ms', [
+              animate(
+                '800ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                style({
+                  opacity: 1,
+                  transform: 'translateY(0) scale(1) rotateX(0deg)',
+                  filter: 'blur(0px)',
+                })
+              ),
+            ]),
+          ],
+          { optional: true }
+        ),
+      ]),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
   searchTerm: string = '';

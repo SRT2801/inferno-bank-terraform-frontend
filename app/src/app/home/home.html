@@ -1,10 +1,10 @@
-<div class="min-h-screen text-text-light dark:text-text-dark transition-colors duration-300">
+<div class="min-h-screen text-text-light dark:text-text-dark transition-colors duration-300" [@pageEnter]>
   <app-header title="Inferno Bank Services" icon="hub">
   </app-header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" [@staggerAnimation]>
     <!-- Hero Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 stagger-item">
       <div class="lg:col-span-3 p-8 rounded-xl glass-card text-white shadow-lg overflow-hidden relative">
         <div class="absolute -top-10 -right-10 w-48 h-48 bg-purple-400/20 rounded-full blur-2xl"></div>
         <div class="absolute -bottom-20 -left-10 w-64 h-64 bg-pink-400/20 rounded-full blur-2xl"></div>
@@ -15,19 +15,19 @@
               services in one place. Keep track of subscriptions, expenses and statuses with ease.</p>
           </div>
           <div class="mt-8 lg:mt-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 flex-shrink-0">
-            <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center">
+            <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center stagger-item">
               <p class="text-3xl font-bold text-white">{{totalServices}}</p>
               <p class="opacity-80 text-sm text-gray-200">Total</p>
             </div>
-            <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center">
+            <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center stagger-item">
               <p class="text-3xl font-bold text-white">{{activeServices}}</p>
               <p class="opacity-80 text-sm text-gray-200">Active</p>
             </div>
-            <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center">
+            <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center stagger-item">
               <p class="text-3xl font-bold text-white">{{inactiveServices}}</p>
               <p class="opacity-80 text-sm text-gray-200">Inactive</p>
             </div>
-            <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center">
+            <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center stagger-item">
               <p class="text-2xl font-bold text-white">{{formatPrice(totalCost)}}</p>
               <p class="opacity-80 text-sm text-gray-200">Cost</p>
             </div>
@@ -37,13 +37,13 @@
     </div>
 
     <!-- Filter Section -->
-    <app-filter [searchTerm]="searchTerm" [categories]="categories" [selectedCategory]="selectedCategory"
-      placeholder="Search service..." (searchTermChange)="onSearchTermChange($event)"
-      (categorySelect)="onCategorySelect($event)">
+    <app-filter class="stagger-item block" [searchTerm]="searchTerm" [categories]="categories"
+      [selectedCategory]="selectedCategory" placeholder="Search service..."
+      (searchTermChange)="onSearchTermChange($event)" (categorySelect)="onCategorySelect($event)">
     </app-filter>
 
     <!-- Loading State -->
-    <div *ngIf="loading" class="text-center py-12">
+    <div *ngIf="loading" class="text-center py-12 stagger-item">
       <div class="glass-card p-8 rounded-xl">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-dark mx-auto mb-4"></div>
         <h3 class="text-xl font-semibold text-white mb-2">
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Error State -->
-    <div *ngIf="error && !loading" class="text-center py-12">
+    <div *ngIf="error && !loading" class="text-center py-12 stagger-item">
       <div class="glass-card p-8 rounded-xl border border-red-500/20">
         <span class="material-symbols-outlined text-6xl text-red-400 mb-4 block">
           error
@@ -75,7 +75,8 @@
     </div>
 
     <!-- Services Grid Component -->
-    <app-services-grid [services]="filteredServices" [loading]="loading" [error]="error" [trackByFn]="trackByServiceId">
+    <app-services-grid class="stagger-item block" [services]="filteredServices" [loading]="loading" [error]="error"
+      [trackByFn]="trackByServiceId">
     </app-services-grid>
   </main>
 </div>
