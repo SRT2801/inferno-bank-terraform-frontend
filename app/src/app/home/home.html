@@ -4,7 +4,7 @@
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" [@staggerAnimation]>
     <!-- Hero Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 stagger-item">
+    <div id="catalog-section" class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 stagger-item">
       <div class="lg:col-span-3 p-8 rounded-xl glass-card text-white shadow-lg overflow-hidden relative">
         <div class="absolute -top-10 -right-10 w-48 h-48 bg-purple-400/20 rounded-full blur-2xl"></div>
         <div class="absolute -bottom-20 -left-10 w-64 h-64 bg-pink-400/20 rounded-full blur-2xl"></div>
@@ -14,7 +14,8 @@
             <p class="text-lg opacity-90 max-w-2xl text-gray-200">Manage all your digital
               services in one place. Keep track of subscriptions, expenses and statuses with ease.</p>
           </div>
-          <div class="mt-8 lg:mt-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 flex-shrink-0">
+          <div id="cost-section"
+            class="mt-8 lg:mt-0 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 flex-shrink-0">
             <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center text-center stagger-item">
               <p class="text-3xl font-bold text-white">{{totalServices}}</p>
               <p class="opacity-80 text-sm text-gray-200">Total</p>
@@ -37,7 +38,7 @@
     </div>
 
     <!-- Filter Section -->
-    <app-filter class="stagger-item block" [searchTerm]="searchTerm" [categories]="categories"
+    <app-filter id="filter-section" class="stagger-item block" [searchTerm]="searchTerm" [categories]="categories"
       [selectedCategory]="selectedCategory" placeholder="Search service..."
       (searchTermChange)="onSearchTermChange($event)" (categorySelect)="onCategorySelect($event)">
     </app-filter>
@@ -75,8 +76,8 @@
     </div>
 
     <!-- Services Grid Component -->
-    <app-services-grid class="stagger-item block" [services]="filteredServices" [loading]="loading" [error]="error"
-      [trackByFn]="trackByServiceId">
+    <app-services-grid id="services-grid" class="stagger-item block" [services]="filteredServices" [loading]="loading"
+      [error]="error" [trackByFn]="trackByServiceId">
     </app-services-grid>
   </main>
 </div>
