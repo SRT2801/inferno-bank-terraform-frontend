@@ -1,0 +1,116 @@
+<div class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+  <!-- Elementos decorativos de fondo -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-64 h-64 bg-purple-400/30 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-20 right-10 w-72 h-72 bg-pink-400/30 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 1s;"></div>
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 2s;"></div>
+  </div>
+
+  <!-- Login Card -->
+  <div class="w-full max-w-md relative z-10">
+    <!-- Logo/Header -->
+    <div class="text-center mb-8">
+      <div class="glass-card inline-block p-4 rounded-2xl mb-4">
+        <span class="material-symbols-outlined text-6xl text-white">
+          account_balance
+        </span>
+      </div>
+      <h1 class="text-4xl font-bold text-white mb-2">Inferno Bank</h1>
+      <p class="text-gray-200 text-lg">Access your account</p>
+    </div>
+
+    <!-- Login Form Card -->
+    <div class="glass-card p-8 rounded-2xl shadow-2xl">
+      <form (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Error Message -->
+        <div *ngIf="error" class="glass-card p-4 rounded-xl border border-red-500/30 bg-red-500/10">
+          <div class="flex items-center">
+            <span class="material-symbols-outlined text-red-400 mr-2">
+              error
+            </span>
+            <p class="text-red-300 text-sm">{{error}}</p>
+          </div>
+        </div>
+
+        <!-- Email Input -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-white mb-2">
+            Email
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-300">
+              mail
+            </span>
+            <input id="email" name="email" type="email" [(ngModel)]="email" required
+              class="w-full pl-12 pr-4 py-3 glass-input rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              placeholder="your@email.com">
+          </div>
+        </div>
+
+        <!-- Password Input -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-white mb-2">
+            Password
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-300">
+              lock
+            </span>
+            <input id="password" name="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password"
+              required
+              class="w-full pl-12 pr-12 py-3 glass-input rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              placeholder="••••••••">
+            <button type="button" (click)="togglePasswordVisibility()"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white transition-colors">
+              <span class="material-symbols-outlined">
+                {{showPassword ? 'visibility_off' : 'visibility'}}
+              </span>
+            </button>
+          </div>
+        </div>
+
+
+
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="loading"
+          class="w-full py-3 px-4 glass-button-primary rounded-xl font-semibold text-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+          <span *ngIf="!loading">Login</span>
+          <span *ngIf="loading" class="flex items-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
+            </svg>
+            Login...
+          </span>
+        </button>
+      </form>
+
+      <!-- Register Link -->
+      <div class="mt-6 text-center">
+        <p class="text-gray-300">
+          Don't have an account?
+          <button type="button" (click)="goToRegister()"
+            class="text-purple-300 hover:text-purple-200 font-semibold transition-colors ml-1">
+            Register here
+          </button>
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer Info -->
+    <div class="mt-8 text-center">
+      <p class="text-gray-300 text-sm">
+        By logging in, you agree to our
+        <a href="#" class="text-purple-300 hover:text-purple-200 transition-colors">Terms of Service</a>
+        and
+        <a href="#" class="text-purple-300 hover:text-purple-200 transition-colors">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+</div>
