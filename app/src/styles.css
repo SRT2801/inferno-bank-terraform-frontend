@@ -236,3 +236,73 @@
 [data-sonner-toast][data-type='loading'] [data-icon] {
   color: #a78bfa !important;
 }
+
+/* ===== Estilos personalizados para Driver.js ===== */
+@import 'driver.js/dist/driver.css';
+
+.driver-popover {
+  background: rgba(40, 25, 55, 0.95) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(167, 139, 250, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.5) !important;
+}
+
+.driver-popover-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.driver-popover-description {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  color: #e5e7eb !important;
+}
+
+.driver-popover-footer button {
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.driver-popover-next-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.driver-popover-next-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+}
+
+.driver-popover-prev-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.driver-popover-prev-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.driver-popover-close-btn {
+  color: white !important;
+  opacity: 0.7 !important;
+}
+
+.driver-popover-close-btn:hover {
+  opacity: 1 !important;
+}
+
+.driver-overlay {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.driver-active-element {
+  box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.5) !important;
+}
