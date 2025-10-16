@@ -81,6 +81,68 @@ export class TourService {
     this.driverObj.drive();
   }
 
+  async startProfileTour(): Promise<void> {
+    const { driver } = await import('driver.js');
+
+    this.driverObj = driver({
+      showProgress: true,
+      showButtons: ['next', 'previous', 'close'],
+      nextBtnText: 'Next',
+      prevBtnText: 'Previous',
+      doneBtnText: 'Done',
+      animate: true,
+      smoothScroll: true,
+      steps: [
+        {
+          popover: {
+            title: 'Welcome to Your Profile! 👤',
+            description:
+              'This is your personal profile page where you can view your account information and manage your bank cards. Let\'s take a quick tour of the features available here.',
+            side: 'bottom',
+            align: 'center',
+          },
+        },
+        {
+          element: '#profile-info-section',
+          popover: {
+            title: 'Your Personal Information 📋',
+            description:
+              'Here you can see your account details including your name, email address, identification document, and the total number of cards you have. This information helps you keep track of your Inferno Bank account.',
+            side: 'bottom',
+            align: 'start',
+          },
+        },
+        {
+          element: '#cards-section',
+          popover: {
+            title: 'Your Bank Cards 💳',
+            description:
+              'This section displays all your registered bank cards. Each card shows its type (Credit or Debit), current status, and available balance. You can have multiple cards for different purposes.',
+            side: 'top',
+            align: 'start',
+          },
+        },
+        {
+          element: '#cards-grid',
+          popover: {
+            title: 'Interactive Card Display 🔄',
+            description:
+              'Each card is interactive! Hover over any card to flip it and see additional details on the back, including the creation date and unique card ID. You can also copy the card ID to your clipboard by clicking the copy button.',
+            side: 'top',
+            align: 'center',
+          },
+        },
+      ],
+      onDestroyStarted: () => {
+        if (this.driverObj) {
+          this.driverObj.destroy();
+        }
+      },
+    });
+
+    this.driverObj.drive();
+  }
+
   stopTour(): void {
     if (this.driverObj) {
       this.driverObj.destroy();

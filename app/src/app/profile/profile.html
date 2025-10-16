@@ -21,6 +21,12 @@
         <span class="material-symbols-outlined text-3xl sm:text-5xl">account_circle</span>
         My Profile
       </h1>
+
+      <button (click)="startTour()"
+        class="absolute right-0 flex items-center gap-1 sm:gap-2 glass-button px-2 sm:px-4 py-2 rounded-xl text-white hover:scale-105 transition-all hover:bg-purple-500/20">
+        <span class="material-symbols-outlined text-xl sm:text-2xl">help</span>
+        <span class="hidden sm:inline">Tour</span>
+      </button>
     </div>
 
     <!-- Loading State -->
@@ -41,7 +47,7 @@
     <div *ngIf="!loading && profileData" [@fadeIn]>
 
       <!-- User Info Section -->
-      <div [@slideIn]>
+      <div [@slideIn] id="profile-info-section">
         <div class="glass-card p-6 rounded-2xl">
           <div class="flex items-center gap-3 mb-4 pb-4 border-b border-white/10">
             <div class="glass-card p-3 rounded-xl">
@@ -87,7 +93,7 @@
       </div>
 
       <!-- Card Info Section -->
-      <div class="mt-6" [@slideIn]>
+      <div class="mt-6" [@slideIn] id="cards-section">
         <div class="glass-card p-6 rounded-2xl">
           <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
             <div class="glass-card p-3 rounded-xl">
@@ -102,7 +108,7 @@
           </div>
 
           <!-- Cards Grid -->
-          <div *ngIf="profileData.cards.length > 0" class="flex flex-wrap justify-center gap-6">
+          <div *ngIf="profileData.cards.length > 0" class="flex flex-wrap justify-center gap-6" id="cards-grid">
             <div *ngFor="let card of profileData.cards" class="flip-card">
               <div class="flip-card-inner">
                 <!-- Front of Card -->

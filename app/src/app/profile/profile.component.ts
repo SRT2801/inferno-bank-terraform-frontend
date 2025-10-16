@@ -5,6 +5,7 @@ import { ProfileService } from '../shared/services/profile.service';
 import { ProfileData, Card } from '../shared/models/profile.interface';
 import { AlertService } from '../shared/services/alert.service';
 import { AuthService } from '../shared/services/auth.service';
+import { TourService } from '../shared/services/tour.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
@@ -36,6 +37,7 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private alertService: AlertService,
     private authService: AuthService,
+    private tourService: TourService,
     private router: Router
   ) {}
 
@@ -104,5 +106,9 @@ export class ProfileComponent implements OnInit {
         this.alertService.error('Error', 'Failed to copy to clipboard');
       }
     );
+  }
+
+  startTour(): void {
+    this.tourService.startProfileTour();
   }
 }
