@@ -164,18 +164,16 @@
                       <span class="info-value">{{ formatDate(card.createdAt) }}</span>
                     </div>
                     <div class="info-row">
-                      <div class="flex items-center justify-between w-full">
-                        <div class="flex-1">
+                      <div class="flex items-center justify-between w-full gap-2">
+                        <div class="flex-1 min-w-0">
                           <span class="info-label mb-1">
                             <span class="material-symbols-outlined text-sm">fingerprint</span>
                             Card ID
                           </span>
                           <span class="info-value card-id block">{{ card.uuid }}</span>
                         </div>
-                        <button (click)="copyToClipboard(card.uuid)"
-                          class="copy-btn ml-2 p-2 rounded-lg hover:bg-white/10 transition-all"
-                          title="Copy to clipboard">
-                          <span class="material-symbols-outlined text-base">content_copy</span>
+                        <button (click)="copyToClipboard(card.uuid)" class="copy-btn" title="Copy to clipboard">
+                          <span class="material-symbols-outlined">content_copy</span>
                         </button>
                       </div>
                     </div>

@@ -226,10 +226,13 @@
 
 .card-id {
   font-family: 'Courier New', monospace;
-  font-size: 0.55rem;
-  word-break: break-all;
+  font-size: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 1.2;
-  padding-right: 0.5rem;
+  padding-right: 0.25rem;
+  max-width: 100%;
 }
 
 .copy-btn {
@@ -239,12 +242,23 @@
   background: transparent;
   color: #9ca3af;
   transition: all 0.3s ease;
-  padding: 0.3rem;
+  padding: 0.15rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-btn .material-symbols-outlined {
+  font-size: 14px;
 }
 
 .copy-btn:hover {
   color: #a78bfa;
-  transform: scale(1.1);
+  transform: scale(1.15);
+  background: rgba(167, 139, 250, 0.1);
+  border-radius: 0.25rem;
 }
 
 .copy-btn:active {
