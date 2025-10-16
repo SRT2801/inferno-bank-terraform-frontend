@@ -65,7 +65,7 @@ export class TourService {
           popover: {
             title: 'User Profile & Account 👤',
             description:
-              "View your account information here. Click the logout button to securely sign out of your account when you're finished managing your services.",
+              "Check your profile and card information by clicking on your avatar in the top-right corner. Here you can view your personal details and manage your bank cards.",
             side: 'left',
             align: 'start',
           },
