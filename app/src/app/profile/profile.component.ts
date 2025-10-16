@@ -43,6 +43,24 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProfile();
+    this.checkAndStartTour();
+  }
+
+  checkAndStartTour(): void {
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser) {
+      const tourKey = `hasSeenProfileTour_${currentUser.email}`;
+      const hasSeenTour = localStorage.getItem(tourKey) === 'true';
+
+      if (!hasSeenTour) {
+        setTimeout(() => {
+          if (!this.loading && this.profileData) {
+            this.tourService.startProfileTour();
+            localStorage.setItem(tourKey, 'true');
+          }
+        }, 2000);
+      }
+    }
   }
 
   loadProfile(): void {
