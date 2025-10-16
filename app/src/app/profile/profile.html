@@ -1,0 +1,192 @@
+<div class="min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-64 h-64 bg-purple-400/30 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-20 right-10 w-72 h-72 bg-pink-400/30 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 1s;"></div>
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 2s;"></div>
+  </div>
+
+  <div class="max-w-6xl mx-auto relative z-10">
+    <!-- Header con navegación -->
+    <div class="flex items-center justify-center mb-8 relative" [@fadeIn]>
+      <button (click)="goBack()"
+        class="absolute left-0 flex items-center gap-2 glass-button px-4 py-2 rounded-xl text-white hover:scale-105 transition-all">
+        <span class="material-symbols-outlined">arrow_back</span>
+        <span>Back</span>
+      </button>
+
+      <h1 class="text-4xl font-bold text-white flex items-center gap-3">
+        <span class="material-symbols-outlined text-5xl">account_circle</span>
+        My Profile
+      </h1>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex justify-center items-center py-20" [@fadeIn]>
+      <div class="glass-card p-8 rounded-2xl">
+        <svg class="animate-spin h-12 w-12 text-purple-400 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+          </path>
+        </svg>
+        <p class="text-white mt-4 text-center">Loading profile...</p>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div *ngIf="!loading && profileData" [@fadeIn]>
+
+      <!-- User Info Section -->
+      <div [@slideIn]>
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="flex items-center gap-3 mb-4 pb-4 border-b border-white/10">
+            <div class="glass-card p-3 rounded-xl">
+              <span class="material-symbols-outlined text-4xl text-purple-300">
+                account_circle
+              </span>
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-white">{{ profileData.name }} {{ profileData.lastName }}</h2>
+              <p class="text-gray-300 text-sm">Profile Information</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Email -->
+            <div class="glass-input p-3 rounded-lg">
+              <label class="text-xs font-medium text-gray-400 mb-1 flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm text-purple-300">mail</span>
+                Email
+              </label>
+              <p class="text-white text-sm font-semibold">{{ profileData.email }}</p>
+            </div>
+
+            <!-- Document -->
+            <div class="glass-input p-3 rounded-lg">
+              <label class="text-xs font-medium text-gray-400 mb-1 flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm text-purple-300">badge</span>
+                Document
+              </label>
+              <p class="text-white text-sm font-semibold">{{ profileData.document }}</p>
+            </div>
+
+            <!-- Total Cards -->
+            <div class="glass-input p-3 rounded-lg">
+              <label class="text-xs font-medium text-gray-400 mb-1 flex items-center gap-1">
+                <span class="material-symbols-outlined text-sm text-purple-300">payments</span>
+                Total Cards
+              </label>
+              <p class="text-white text-sm font-semibold">{{ profileData.cards.length }} card(s)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Info Section -->
+      <div class="mt-6" [@slideIn]>
+        <div class="glass-card p-6 rounded-2xl">
+          <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+            <div class="glass-card p-3 rounded-xl">
+              <span class="material-symbols-outlined text-4xl text-purple-300">
+                credit_card
+              </span>
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-white">My Cards</h2>
+              <p class="text-gray-300 text-sm">{{ profileData.cards.length }} card(s) available</p>
+            </div>
+          </div>
+
+          <!-- Cards Grid -->
+          <div *ngIf="profileData.cards.length > 0" class="flex flex-wrap justify-center gap-6">
+            <div *ngFor="let card of profileData.cards" class="flip-card">
+              <div class="flip-card-inner">
+                <!-- Front of Card -->
+                <div class="flip-card-front" [class.credit-card]="card.type === 'CREDIT'"
+                  [class.debit-card]="card.type === 'DEBIT'">
+                  <!-- Card Type Header -->
+                  <p class="card-type-label">{{ card.type }}</p>
+
+                  <!-- Logo -->
+                  <svg class="card-logo" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="36" height="36"
+                    viewBox="0 0 48 48">
+                    <path fill="#ff9800" d="M32 10A14 14 0 1 0 32 38A14 14 0 1 0 32 10Z"></path>
+                    <path fill="#d50000" d="M16 10A14 14 0 1 0 16 38A14 14 0 1 0 16 10Z"></path>
+                    <path fill="#ff3d00"
+                      d="M18,24c0,4.755,2.376,8.95,6,11.48c3.624-2.53,6-6.725,6-11.48s-2.376-8.95-6-11.48 C20.376,15.05,18,19.245,18,24z">
+                    </path>
+                  </svg>
+
+                  <!-- Chip -->
+                  <svg version="1.1" class="card-chip" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30px"
+                    height="30px" viewBox="0 0 50 50">
+                    <image width="50" height="50" x="0" y="0"
+                      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAB6VBMVEUAAACNcTiVeUKVeUOYfEaafEeUeUSYfEWZfEaykleyklaXe0SWekSZZjOYfEWYe0WXfUWXe0WcgEicfkiXe0SVekSXekSWekKYe0a9nF67m12ZfUWUeEaXfESVekOdgEmVeUWWekSniU+VeUKVeUOrjFKYfEWliE6WeESZe0GSe0WYfES7ml2Xe0WXeESUeEOWfEWcf0eWfESXe0SXfEWYekSVeUKXfEWxklawkVaZfEWWekOUekOWekSYfESZe0eXekWYfEWZe0WZe0eVeUSWeETAnmDCoWLJpmbxy4P1zoXwyoLIpWbjvXjivnjgu3bfu3beunWvkFWxkle/nmDivXiWekTnwXvkwHrCoWOuj1SXe0TEo2TDo2PlwHratnKZfEbQrWvPrWuafUfbt3PJp2agg0v0zYX0zYSfgkvKp2frxX7mwHrlv3rsxn/yzIPgvHfduXWXe0XuyIDzzISsjVO1lVm0lFitjVPzzIPqxX7duna0lVncuHTLqGjvyIHeuXXxyYGZfUayk1iyk1e2lln1zYTEomO2llrbtnOafkjFpGSbfkfZtXLhvHfkv3nqxH3mwXujhU3KqWizlFilh06khk2fgkqsjlPHpWXJp2erjVOhg0yWe0SliE+XekShhEvAn2D///+gx8TWAAAARnRSTlMACVCTtsRl7Pv7+vxkBab7pZv5+ZlL/UnU/f3SJCVe+Fx39naA9/75XSMh0/3SSkia+pil/KRj7Pr662JPkrbP7OLQ0JFOijI1MwAAAAFiS0dEorDd34wAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfnAg0IDx2lsiuJAAACLElEQVRIx2NgGAXkAUYmZhZWPICFmYkRVQcbOwenmzse4MbFzc6DpIGXj8PD04sA8PbhF+CFaxEU8iWkAQT8hEVgOkTF/InR4eUVICYO1SIhCRMLDAoKDvFDVhUaEhwUFAjjSUlDdMiEhcOEItzdI6OiYxA6YqODIt3dI2DcuDBZsBY5eVTr4xMSYcyk5BRUOXkFsBZFJTQnp6alQxgZmVloUkrKYC0qqmji2WE5EEZuWB6alKoKdi35YQUQRkFYPpFaCouKIYzi6EDitJSUlsGY5RWVRGjJLyxNy4ZxqtIqqvOxaVELQwZFZdkIJVU1RSiSalAt6rUwUBdWG1CP6pT6gNqwOrgCdQyHNYR5YQFhDXj8MiK1IAeyN6aORiyBjByVTc0FqBoKWpqwRCVSgilOaY2OaUPw29qjOzqLvTAchpos47u6EZyYnngUSRwpuTe6D+6qaFQdOPNLRzOM1dzhRZyW+CZouHk3dWLXglFcFIflQhj9YWjJGlZcaKAVSvjyPrRQ0oQVKDAQHlYFYUwIm4gqExGmBSkutaVQJeomwViTJqPK6OhCy2Q9sQBk8cY0DxjTJw0lAQWK6cOKfgNhpKK7ZMpUeF3jPa28BCET amiEqJKM+X1gxvWXpoUjVIVPnwErw71nmpgiqiQGBjNzbgs3j1nus+fMndc+Cwm0T52/oNR9lsdCS24ra7Tq1cbWjpXV3sHRCb1idXZ0sGdltXNxRateRwHRAACYHutzk/2I5QAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0wMi0xM1QwODoxNToyOSswMDowMEUnN7UAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMDItMTNUMDg6MTU6MjkrMDA6MDA0eo8JAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTAyLTEzVDA4OjE1OjI5KzAwOjAwY2+u1gAAAABJRU5ErkJggg==">
+                    </image>
+                  </svg>
+
+                  <!-- Status Badge -->
+                  <span class="card-status" [class.status-activated]="card.status === 'ACTIVATED'"
+                    [class.status-pending]="card.status === 'PENDING'"
+                    [class.status-blocked]="card.status === 'BLOCKED'">
+                    {{ card.status }}
+                  </span>
+
+                  <!-- Card Number (partial) -->
+                  <p class="card-number">•••• •••• •••• {{ card.uuid.substring(0, 4) }}</p>
+
+                  <!-- Balance -->
+                  <div class="card-balance-section">
+                    <p class="balance-label">BALANCE</p>
+                    <p class="balance-amount">{{ formatBalance(card.balance) }}</p>
+                  </div>
+                </div>
+
+                <!-- Back of Card -->
+                <div class="flip-card-back">
+                  <div class="card-strip"></div>
+                  <div class="card-info-back">
+                    <div class="info-row inline">
+                      <span class="info-label">
+                        <span class="material-symbols-outlined text-sm">calendar_today</span>
+                        Created
+                      </span>
+                      <span class="info-value">{{ formatDate(card.createdAt) }}</span>
+                    </div>
+                    <div class="info-row">
+                      <div class="flex items-center justify-between w-full">
+                        <div class="flex-1">
+                          <span class="info-label mb-1">
+                            <span class="material-symbols-outlined text-sm">fingerprint</span>
+                            Card ID
+                          </span>
+                          <span class="info-value card-id block">{{ card.uuid }}</span>
+                        </div>
+                        <button (click)="copyToClipboard(card.uuid)"
+                          class="copy-btn ml-2 p-2 rounded-lg hover:bg-white/10 transition-all"
+                          title="Copy to clipboard">
+                          <span class="material-symbols-outlined text-base">content_copy</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- No Cards Message -->
+          <div *ngIf="profileData.cards.length === 0" class="text-center py-12">
+            <span class="material-symbols-outlined text-8xl text-gray-400 mb-4 block">credit_card_off</span>
+            <p class="text-gray-300 text-xl">No cards found</p>
+            <p class="text-gray-400 mt-2">Contact support to request a new card</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
