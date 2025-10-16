@@ -1,6 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { Service } from '../shared/models/service.interface';
 import { CatalogService } from '../shared/services/catalog.service';
 import { TourService } from '../shared/services/tour.service';
@@ -16,7 +24,7 @@ import { AuthService } from '../shared/services/auth.service';
   styleUrls: ['./home.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   searchTerm: string = '';
   selectedCategory: string = 'Todos';
   loading: boolean = true;
@@ -30,6 +38,10 @@ export class HomeComponent implements OnInit {
   private _activeServices: number = 0;
   private _inactiveServices: number = 0;
   private _totalCost: number = 0;
+
+  private destroy$ = new Subject<void>();
+  private searchTimeout?: ReturnType<typeof setTimeout>;
+  private resizeTimeout?: ReturnType<typeof setTimeout>;
 
   constructor(
     private catalogService: CatalogService,
@@ -58,139 +70,161 @@ export class HomeComponent implements OnInit {
     return service.id || index;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.checkMobileDevice();
     this.loadServices();
+    this.initializeTour();
+  }
 
-    const currentUser = this.authService.currentUserValue;
-    if (currentUser) {
-      const tourKey = `hasSeenTour_${currentUser.email}`;
-      const hasSeenTour = localStorage.getItem(tourKey) === 'true';
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
 
-      if (!hasSeenTour) {
-        setTimeout(() => {
-          this.startTour();
-          localStorage.setItem(tourKey, 'true');
-        }, 2000);
-      }
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
     }
   }
 
-  loadServices() {
+  @HostListener('window:resize')
+  onResize(): void {
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+    }
+
+    this.resizeTimeout = setTimeout(() => {
+      this.checkMobileDevice();
+    }, 250);
+  }
+
+  /**
+   * Inicializa el tour para usuarios nuevos en dispositivos de escritorio
+   */
+  private initializeTour(): void {
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || this.isMobile()) return;
+
+    const tourKey = `hasSeenTour_${currentUser.email}`;
+    const hasSeenTour = localStorage.getItem(tourKey) === 'true';
+
+    if (!hasSeenTour) {
+      setTimeout(() => {
+        this.tourService.startHomeTour();
+        localStorage.setItem(tourKey, 'true');
+      }, 2000);
+    }
+  }
+
+  loadServices(): void {
     this.loading = true;
     this.error = null;
 
-    this.catalogService.getCatalog().subscribe({
-      next: (services) => {
-        this.services = services;
-        this.calculateStats();
-        this.updateCategories();
-        this.filterServices();
-        this.loading = false;
-        this.cdr.markForCheck();
-        this.checkAndStartTour();
-      },
-
-      error: (err) => {
-        console.error('Error loading services:', err);
-        this.error = 'Error al cargar los servicios. Por favor, intenta de nuevo.';
-        this.loading = false;
-        this.cdr.markForCheck();
-      },
-    });
+    this.catalogService
+      .getCatalog()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (services) => {
+          this.services = services;
+          this.updateCategories();
+          this.calculateStats();
+          this.filterServices();
+          this.loading = false;
+          this.cdr.markForCheck();
+        },
+        error: (err) => {
+          console.error('Error loading services:', err);
+          this.error = 'Error al cargar los servicios. Por favor, intenta de nuevo.';
+          this.loading = false;
+          this.cdr.markForCheck();
+        },
+      });
   }
 
-  updateCategories() {
+  private updateCategories(): void {
     const uniqueCategories = [...new Set(this.services.map((s) => s.categoria).filter(Boolean))];
     this.categories = ['Todos', ...uniqueCategories.sort()];
   }
 
-  private searchTimeout: any;
-
-  filterServices() {
+  private filterServices(): void {
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
 
     this.searchTimeout = setTimeout(() => {
+      const searchLower = this.searchTerm.toLowerCase();
+
       this.filteredServices = this.services.filter((service) => {
         const matchesSearch =
-          service.servicio?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          service.proveedor?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          service.plan?.toLowerCase().includes(this.searchTerm.toLowerCase());
+          !searchLower ||
+          service.servicio?.toLowerCase().includes(searchLower) ||
+          service.proveedor?.toLowerCase().includes(searchLower) ||
+          service.plan?.toLowerCase().includes(searchLower);
+
         const matchesCategory =
           this.selectedCategory === 'Todos' || service.categoria === this.selectedCategory;
+
         return matchesSearch && matchesCategory;
       });
+
       this.cdr.markForCheck();
     }, 300);
   }
 
-  private calculateStats() {
+  private calculateStats(): void {
     this._totalServices = this.services.length;
-    this._activeServices = this.services.filter((s) => s.estado?.toLowerCase() === 'activo').length;
-    this._inactiveServices = this.services.filter(
-      (s) => s.estado?.toLowerCase() !== 'activo'
-    ).length;
-    this._totalCost = this.services
-      .filter((s) => s.estado?.toLowerCase() === 'activo')
-      .reduce((total, service) => {
+
+    let activeCount = 0;
+    let totalCost = 0;
+
+    for (const service of this.services) {
+      const isActive = service.estado?.toLowerCase() === 'activo';
+
+      if (isActive) {
+        activeCount++;
         const numericPrice =
           parseFloat((service.precioMensual || '0').replace(/[^0-9.]/g, '')) || 0;
-        return total + numericPrice;
-      }, 0);
+        totalCost += numericPrice;
+      }
+    }
+
+    this._activeServices = activeCount;
+    this._inactiveServices = this._totalServices - activeCount;
+    this._totalCost = totalCost;
   }
 
-  onSearchChange() {
-    this.filterServices();
-    this.cdr.markForCheck();
-  }
-
-  selectCategory(category: string) {
-    this.selectedCategory = category;
-    this.filterServices();
-    this.cdr.markForCheck();
-  }
-
-  onSearchTermChange(searchTerm: string) {
+  onSearchTermChange(searchTerm: string): void {
     this.searchTerm = searchTerm;
     this.filterServices();
-    this.cdr.markForCheck();
   }
 
-  onCategorySelect(category: string) {
+  onCategorySelect(category: string): void {
     this.selectedCategory = category;
     this.filterServices();
-    this.cdr.markForCheck();
   }
 
   formatPrice(price: number): string {
-    return new Intl.NumberFormat('es-CO').format(price || 0);
+    return new Intl.NumberFormat('es-CO', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(price || 0);
   }
 
   private isMobile(): boolean {
     return window.innerWidth < 768;
   }
 
-  private checkAndStartTour(): void {
-    const hasSeenTour = localStorage.getItem('hasSeenTour');
-
-    if (!hasSeenTour && !this.isMobile()) {
-      setTimeout(() => {
-        this.tourService.startHomeTour();
-        localStorage.setItem('hasSeenTour', 'true');
-      }, 2000);
-    }
-  }
-  startTour() {
+  startTour(): void {
     const currentUser = this.authService.currentUserValue;
     if (!currentUser) return;
 
     this.tourService.startHomeTour();
   }
 
-  checkMobileDevice() {
-    const isMobile = window.innerWidth < 768;
+  private checkMobileDevice(): void {
+    const isMobile = this.isMobile();
     document.body.classList.toggle('mobile', isMobile);
     document.body.classList.toggle('desktop', !isMobile);
   }
