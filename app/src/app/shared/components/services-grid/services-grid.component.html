@@ -1,47 +1,54 @@
-<!-- Services Grid -->
 <div *ngIf="!loading && !error" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let service of services; trackBy: trackByServiceId"
-        class="glass-card p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <h4 class="text-xl font-bold text-white">{{getServiceName(service)}}</h4>
-                <p class="text-sm text-gray-300">{{getServiceProvider(service)}}</p>
-            </div>
-            <span [class]="'text-xs font-medium px-2 py-1 rounded-full ' + getCategoryColor(service.categoria || '')">
-                {{service.categoria || 'Sin categoría'}}
-            </span>
+  <div *ngFor="let service of services; trackBy: trackByServiceId" class="service-card-container">
+    <div class="service-card">
+      <span class="service-badge" [attr.data-category]="service.categoria">
+        <span class="badge-text">PREMIUM</span>
+      </span>
+
+      <!-- Contenido de la card -->
+      <div class="card-content">
+        <div class="card-header">
+          <span class="category-inline-badge" [attr.data-category]="service.categoria">
+            {{service.categoria || 'General'}}
+          </span>
+          <h4 class="service-title">{{getServiceName(service)}}</h4>
+          <p class="service-provider">
+            <span class="material-symbols-outlined text-sm">business</span>
+            {{getServiceProvider(service)}}
+          </p>
         </div>
-        <p class="text-sm text-gray-300 mb-4">{{getServiceDescription(service)}}</p>
-        <div class="border-t border-purple-200/20 dark:border-purple-200/10 my-4"></div>
-        <div class="flex justify-between items-center">
-            <p class="text-xl font-bold text-primary-dark">
-                ${{formatPrice(service.precioMensual)}}
-                <span class="text-sm font-normal text-gray-300">/mes</span>
-            </p>
-            <span
-                [class]="isServiceActive(service) ?
-        'text-xs font-semibold inline-flex items-center px-2.5 py-1 rounded-full bg-green-100/50 text-green-800 dark:bg-green-900/50 dark:text-green-200' :
-        'text-xs font-semibold inline-flex items-center px-2.5 py-1 rounded-full bg-red-100/50 text-red-800 dark:bg-red-900/50 dark:text-red-200'">
-                <span class="material-symbols-outlined text-sm mr-1">
-                    {{isServiceActive(service) ? 'check_circle' : 'cancel'}}
-                </span>
-                {{service.estado || 'Desconocido'}}
+
+        <!-- Descripción -->
+        <p class="service-description">{{getServiceDescription(service)}}</p>>
+        <div class="card-divider"></div>
+        <div class="card-footer">
+          <div class="price-container">
+            <span class="price-amount">${{formatPrice(service.precioMensual)}}</span>
+            <span class="price-period">/mes</span>
+          </div>
+          <span [class]="'status-badge ' + (isServiceActive(service) ? 'status-active' : 'status-inactive')">
+            <span class="material-symbols-outlined">
+              {{isServiceActive(service) ? 'check_circle' : 'cancel'}}
             </span>
+            {{service.estado || 'Desconocido'}}
+          </span>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Mensaje cuando no hay servicios -->
 <div *ngIf="!loading && !error && services.length === 0" class="text-center py-12">
-    <div class="glass-card p-8 rounded-xl">
-        <span class="material-symbols-outlined text-6xl text-gray-400 mb-4 block">
-            search_off
-        </span>
-        <h3 class="text-xl font-semibold text-white mb-2">
-            No se encontraron servicios
-        </h3>
-        <p class="text-gray-300">
-            Intenta ajustar tu búsqueda o seleccionar una categoría diferente.
-        </p>
-    </div>
+  <div class="glass-card p-8 rounded-xl">
+    <span class="material-symbols-outlined text-6xl text-gray-400 mb-4 block">
+      search_off
+    </span>
+    <h3 class="text-xl font-semibold text-white mb-2">
+      No se encontraron servicios
+    </h3>
+    <p class="text-gray-300">
+      Intenta ajustar tu búsqueda o seleccionar una categoría diferente.
+    </p>
+  </div>
 </div>
