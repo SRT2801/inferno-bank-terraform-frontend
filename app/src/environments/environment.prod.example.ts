@@ -3,5 +3,6 @@ export const environment = {
   catalogApiUrl: '',
   loginApiUrl: '',
   registerApiUrl: '',
+  profileApiUrl: '',
   enableLogging: false,
 };
