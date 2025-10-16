@@ -34,10 +34,15 @@
             <span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-300">
               mail
             </span>
-            <input id="email" name="email" type="email" [(ngModel)]="email" required
+            <input id="email" name="email" type="email" [(ngModel)]="email" required (blur)="onEmailBlur()"
+              [class.ring-2]="showEmailError" [class.ring-red-500]="showEmailError"
               class="w-full pl-12 pr-4 py-3 glass-input rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
-              placeholder="your@email.com">
+              placeholder="your@email.com" autocomplete="email">
           </div>
+          <p *ngIf="showEmailError" class="mt-2 text-sm text-red-400 flex items-center">
+            <span class="material-symbols-outlined text-sm mr-1">error</span>
+            Please enter a valid email address
+          </p>
         </div>
 
         <!-- Password Input -->
@@ -50,23 +55,29 @@
               lock
             </span>
             <input id="password" name="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password"
-              required
+              required (blur)="onPasswordBlur()" [class.ring-2]="showPasswordError"
+              [class.ring-red-500]="showPasswordError"
               class="w-full pl-12 pr-12 py-3 glass-input rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
-              placeholder="••••••••">
+              placeholder="••••••••" autocomplete="current-password">
             <button type="button" (click)="togglePasswordVisibility()"
-              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white transition-colors">
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-300 hover:text-white transition-colors focus:outline-none"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
               <span class="material-symbols-outlined">
                 {{showPassword ? 'visibility_off' : 'visibility'}}
               </span>
             </button>
           </div>
+          <p *ngIf="showPasswordError" class="mt-2 text-sm text-red-400 flex items-center">
+            <span class="material-symbols-outlined text-sm mr-1">error</span>
+            Password must be at least 6 characters
+          </p>
         </div>
 
 
 
         <!-- Submit Button -->
-        <button type="submit" [disabled]="loading"
-          class="w-full py-3 px-4 glass-button-primary rounded-xl font-semibold text-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+        <button type="submit" [disabled]="loading || !isFormValid"
+          class="w-full py-3 px-4 glass-button-primary rounded-xl font-semibold text-white hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
           <span *ngIf="!loading">Login</span>
           <span *ngIf="loading" class="flex items-center">
             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -76,7 +87,7 @@
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
               </path>
             </svg>
-            Login...
+            Logging in...
           </span>
         </button>
       </form>
