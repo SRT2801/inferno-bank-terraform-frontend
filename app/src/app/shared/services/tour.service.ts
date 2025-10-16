@@ -97,7 +97,7 @@ export class TourService {
           popover: {
             title: 'Welcome to Your Profile! 👤',
             description:
-              'This is your personal profile page where you can view your account information and manage your bank cards. Let\'s take a quick tour of the features available here.',
+              "This is your personal profile page where you can view your account information and manage your bank cards. Let's take a quick tour of the features available here.",
             side: 'bottom',
             align: 'center',
           },
