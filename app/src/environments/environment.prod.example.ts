@@ -4,5 +4,6 @@ export const environment = {
   loginApiUrl: '',
   registerApiUrl: '',
   profileApiUrl: '',
+  paymentApiUrl: '',
   enableLogging: false,
 };
