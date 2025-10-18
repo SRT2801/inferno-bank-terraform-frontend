@@ -1,0 +1,216 @@
+/* Animaciones personalizadas */
+
+/* Animación de entrada desde la derecha (Desktop) */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animación de salida hacia la derecha (Desktop) */
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Animación de entrada desde abajo (Mobile) */
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animación de salida hacia abajo (Mobile) */
+@keyframes slideOutDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Animación de fade in para el overlay */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animación de fade out para el overlay */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Estilos para el overlay */
+:host ::ng-deep .modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 9998 !important;
+
+  /* Animación de fade in */
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Cuando el overlay se está cerrando */
+:host ::ng-deep .modal-overlay.closing {
+  animation: fadeOut 0.3s ease-out forwards;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Contenedor del modal con scroll */
+.modal-scroll-container {
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  position: fixed !important;
+  z-index: 9999 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+
+  /* Animación por defecto (Desktop) */
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Cuando el modal se está cerrando */
+.modal-scroll-container.closing {
+  animation: slideOutRight 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Responsive: En móvil, ocupar toda la pantalla */
+@media (max-width: 639px) {
+  .modal-scroll-container {
+    left: 0 !important;
+    right: 0 !important;
+    max-width: 100% !important;
+
+    /* Animación desde abajo en móvil */
+    animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .modal-scroll-container.closing {
+    animation: slideOutDown 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+}
+
+/* Responsive: En tablet y desktop, lado derecho */
+@media (min-width: 640px) {
+  .modal-scroll-container {
+    max-width: 28rem !important; /* 448px */
+  }
+}
+
+/* Asegurar que el contenido del modal inicie desde arriba */
+.modal-scroll-container > * {
+  scroll-margin-top: 0;
+}
+
+/* Estilos para el scroll */
+.modal-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+@media (min-width: 640px) {
+  .modal-scroll-container::-webkit-scrollbar {
+    width: 8px;
+  }
+}
+
+.modal-scroll-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 4px;
+}
+
+.modal-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.7);
+}
+
+/* Scroll genérico para otros elementos */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.7);
+}
+
+/* Animación del spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Mejoras para touch en móvil */
+@media (max-width: 639px) {
+  .modal-scroll-container {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hacer botones más grandes en móvil para mejor touch */
+  button {
+    min-height: 44px;
+  }
+}
+
+/* Prevenir selección de texto en elementos interactivos */
+button,
+.material-symbols-outlined {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
