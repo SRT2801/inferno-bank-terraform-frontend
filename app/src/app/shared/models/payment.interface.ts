@@ -1,23 +1,6 @@
-export interface PaymentRequest {
-  cardId: string;
-  service: Service;
-}
+export type PaymentStatusType = 'INITIAL' | 'IN_PROGRESS' | 'FAILED' | 'FINISH';
 
-export interface PaymentResponse {
-  traceId: string;
-}
-
-export interface PaymentStatus {
-  userId: string;
-  cardId: string;
-  service: Service;
-  traceId: string;
-  status: "INITIAL" | "IN_PROGRESS" | "FAILED" | "FINISH";
-  error?: string;
-  timestamp: string;
-}
-
-export interface Service {
+export interface ServiceDetails {
   id: number;
   categoria: string;
   proveedor: string;
@@ -26,4 +9,29 @@ export interface Service {
   precio_mensual: number;
   detalles: string;
   estado: string;
+}
+
+export interface PaymentRequest {
+  cardId: string;
+  service: ServiceDetails;
+}
+
+export interface PaymentResponse {
+  message: string;
+  traceId: string;
+}
+
+export interface PaymentStatusResponse {
+  message: string;
+  status: PaymentStatusType;
+}
+
+export interface PaymentStatus {
+  userId: string;
+  cardId: string;
+  service: ServiceDetails;
+  traceId: string;
+  status: PaymentStatusType;
+  error?: string;
+  timestamp: string;
 }
