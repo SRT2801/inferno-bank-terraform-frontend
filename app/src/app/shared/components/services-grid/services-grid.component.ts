@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Service } from '../../models/service.interface';
 
@@ -14,6 +14,7 @@ export class ServicesGridComponent {
   @Input() loading: boolean = false;
   @Input() error: string | null = null;
   @Input() trackByFn?: (index: number, service: Service) => any;
+  @Output() payService = new EventEmitter<Service>();
 
   // Limitar elementos mostrados inicialmente en móvil
   get displayedServices(): Service[] {
@@ -76,5 +77,9 @@ export class ServicesGridComponent {
 
   isServiceActive(service: Service): boolean {
     return service.estado?.toLowerCase() === 'activo';
+  }
+
+  onPayService(service: Service): void {
+    this.payService.emit(service);
   }
 }

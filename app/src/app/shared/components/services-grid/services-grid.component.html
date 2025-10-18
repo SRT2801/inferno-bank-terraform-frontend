@@ -1,6 +1,7 @@
 <div *ngIf="!loading && !error" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   <div *ngFor="let service of services; trackBy: trackByServiceId" class="service-card-container">
-    <div class="service-card">
+    <div class="service-card" [class.clickable]="isServiceActive(service)"
+      (click)="isServiceActive(service) && onPayService(service)">
       <span class="service-badge" [attr.data-category]="service.categoria">
         <span class="badge-text">PREMIUM</span>
       </span>
@@ -19,7 +20,7 @@
         </div>
 
         <!-- Descripción -->
-        <p class="service-description">{{getServiceDescription(service)}}</p>>
+        <p class="service-description">{{getServiceDescription(service)}}</p>
         <div class="card-divider"></div>
         <div class="card-footer">
           <div class="price-container">
@@ -33,6 +34,7 @@
             {{service.estado || 'Desconocido'}}
           </span>
         </div>
+
       </div>
     </div>
   </div>
