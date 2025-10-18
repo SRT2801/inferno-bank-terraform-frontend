@@ -77,7 +77,11 @@
 
     <!-- Services Grid Component -->
     <app-services-grid id="services-grid" class="block" [services]="filteredServices" [loading]="loading"
-      [error]="error" [trackByFn]="trackByServiceId">
+      [error]="error" [trackByFn]="trackByServiceId" (payService)="onPayService($event)">
     </app-services-grid>
   </main>
+
+  <!-- Payment Modal -->
+  <app-payment-modal [service]="selectedServiceForPayment" [isOpen]="isPaymentModalOpen"
+    (closeModal)="onClosePaymentModal()" (paymentSuccess)="onPaymentSuccess($event)"></app-payment-modal>
 </div>

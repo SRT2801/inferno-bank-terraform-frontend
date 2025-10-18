@@ -15,11 +15,19 @@ import { TourService } from '../shared/services/tour.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { ServicesGridComponent } from '../shared/components/services-grid/services-grid.component';
+import { PaymentModalComponent } from '../shared/components/payment-modal/payment-modal.component';
 import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FormsModule, HeaderComponent, FilterComponent, ServicesGridComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    FilterComponent,
+    ServicesGridComponent,
+    PaymentModalComponent,
+  ],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,6 +41,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   categories: string[] = ['Todos'];
   services: Service[] = [];
   filteredServices: Service[] = [];
+
+  // Payment modal
+  isPaymentModalOpen: boolean = false;
+  selectedServiceForPayment: Service | null = null;
 
   private _totalServices: number = 0;
   private _activeServices: number = 0;
@@ -100,9 +112,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, 250);
   }
 
-  /**
-   * Inicializa el tour para usuarios nuevos en dispositivos de escritorio
-   */
+
   private initializeTour(): void {
     const currentUser = this.authService.currentUserValue;
     if (!currentUser || this.isMobile()) return;
@@ -227,5 +237,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     const isMobile = this.isMobile();
     document.body.classList.toggle('mobile', isMobile);
     document.body.classList.toggle('desktop', !isMobile);
+  }
+
+  onPayService(service: Service): void {
+    this.selectedServiceForPayment = service;
+    this.isPaymentModalOpen = true;
+    this.cdr.markForCheck();
+  }
+
+  onClosePaymentModal(): void {
+    this.isPaymentModalOpen = false;
+    this.selectedServiceForPayment = null;
+    this.cdr.markForCheck();
+  }
+
+  onPaymentSuccess(event: { traceId: string; service: Service }): void {
+    console.log('Payment successful:', event);
+
   }
 }
